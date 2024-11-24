@@ -1,0 +1,44 @@
+================================ ER-Model ================================
+
+Entities and Attributes:
+
+    Book:
+    - BookID (PK) (NOT NULL)
+    - Title (VARCHAR) (NOT NULL)
+    - ReleaseDate (DATE)
+
+    Author:
+    - AuthorID (PK) (NOT NULL)
+    - FirstName (VARCHAR) (NOT NULL)
+    - LastName (VARCHAR) (NOT NULL)
+    - BirthYear (YEAR)
+
+    BookAuthor:
+    - BookID (PK) (FK) (NOT NULL)
+    - AuthorID (PK) (FK) (NOT NULL)
+
+    Lending:
+    - LoanID (PK) (NOT NULL)
+    - BookID (FK) (NOT NULL)
+    - BorrowerID (FK) (NOT NULL)
+    - LoanDate (DATETIME) (NOT NULL)
+    - ReturnDate (DATETIME) (NOT NULL)
+
+    Borrower:
+    - BorrowerID (PK) (NOT NULL)
+    - FirstName (VARCHAR) (NOT NULL)
+    - LastName (VARCHAR) (NOT NULL)
+    - Email (VARCHAR) (NOT NULL)
+    - PhoneNumber (VARCHAR) (NOT NULL)
+
+============================ ER-Relationship ============================
+
+Book and Author:
+    Many-to-Many        --  an author can write several of books and a
+                            book can have several of authors.
+
+Book and Lending:
+    One-to-Many         --  a book can have multiple loans over time.
+
+Borrower and Lending:
+    One-to-Many         --  you can borrow several of books, multiple loans.
