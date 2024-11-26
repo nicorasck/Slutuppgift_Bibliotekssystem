@@ -5,6 +5,8 @@ Entities and Attributes:
     Book:
     - BookID (PK) (NOT NULL)
     - Title (VARCHAR) (NOT NULL)
+    - Genre (VARCHAR)  (NOT NULL)
+    - Publisher (VARCHAR) (NULL)
     - ReleaseDate (DATE)
 
     Author:
@@ -14,8 +16,9 @@ Entities and Attributes:
     - BirthYear (YEAR)
 
     BookAuthor:
-    - BookID (PK) (FK) (NOT NULL)
-    - AuthorID (PK) (FK) (NOT NULL)
+    - BookAuthorID (PK) (NOT NULL)
+    - BookID (FK) (NOT NULL)
+    - AuthorID (FK) (NOT NULL)
 
     Lending:
     - LoanID (PK) (NOT NULL)
@@ -23,6 +26,7 @@ Entities and Attributes:
     - BorrowerID (FK) (NOT NULL)
     - LoanDate (DATETIME) (NOT NULL)
     - ReturnDate (DATETIME) (NOT NULL)
+    - IsReturned (BOOLEAN) (DEFAULT FALSE)
 
     Borrower:
     - BorrowerID (PK) (NOT NULL)
