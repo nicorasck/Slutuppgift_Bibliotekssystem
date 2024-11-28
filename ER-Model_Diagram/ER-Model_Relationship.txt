@@ -8,6 +8,7 @@ Entities and Attributes:
     - Genre (VARCHAR)  (NOT NULL)
     - Publisher (VARCHAR) (NULL)
     - ReleaseDate (DATE)
+    - IsAvailable (BOOLEAN) (DEFAULT FALSE)
 
     Author:
     - AuthorID (PK) (NOT NULL)
