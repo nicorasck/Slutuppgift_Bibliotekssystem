@@ -1,0 +1,6 @@
+dotnet add package Microsoft.EntityFrameworkCore
+dotnet add package Microsoft.EntityFrameworkCore.sqlserver
+dotnet add package Microsoft.EntityFrameworkCore.Tools
+
+dotnet ef migrations add InitialCreate
+dotnet ef database update

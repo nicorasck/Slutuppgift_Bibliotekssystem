@@ -6,13 +6,11 @@ namespace Slutuppgift_Bibliotekssystem
 {
     public class Author
     {
-        public required int ID {get; set;}
-        public required string FirstName {get; set;}
-        public required string LastName {get; set;}
-        public DateOnly BirthYear {get; set;}
-        
+        public int AuthorID {get; set;}   // PK => unique ID for each Author.
+        public string FirstName {get; set;}
+        public string LastName {get; set;}
+        public int ? BirthYear {get; set;}   // can be null => '?'
+
+        public ICollection<BookAuthor> BookAuthors {get; set;}  // Many-to-Many Property => Books.
     }
-
-
-
 }
