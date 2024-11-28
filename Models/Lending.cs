@@ -11,5 +11,8 @@ namespace Slutuppgift_Bibliotekssystem
         public DateTime LoanDate {get; set;}
         public DateTime ReturnDate {get; set;}
         public bool IsReturned {get; set;}      // default is False!
+
+        public Book Book {get; set;}            // Property to the Book entity.
+        public Borrower Borrower {get; set;}    // Property to the Borrower entity.
     }
 }

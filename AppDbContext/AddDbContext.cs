@@ -30,5 +30,8 @@ public class AppDbContext : DbContext
         .HasOne(a => a.Author)                  // BookAuthor is related to one Author.
         .WithMany(ba => ba.BookAuthors)         // Aa Author can have several of BookAuthors.
         .HasForeignKey(aid => aid.AuthorID);    // FK => AuthorID.
+
+        modelBuilder.Entity<Lending>()
+        .HasKey(l => l.LoanID);                 // PK => Lending.
     }
 }
