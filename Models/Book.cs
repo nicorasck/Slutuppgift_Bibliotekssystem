@@ -10,7 +10,7 @@ namespace Slutuppgift_Bibliotekssystem
         public required string Title {get; set;}
         public required string Genre {get; set;}
         public string Publisher {get; set;}         // not necessary to know the Publisher
-        public DateTime? ReleaseDate {get; set;}    // DateTime can be null => '?'
+        public DateOnly? ReleaseDate {get; set;}    // DateTime can be null => '?'
         public bool IsAvailable {get; set;}         // default is False!
 
         public ICollection<BookAuthor> BookAuthors {get; set;}  // Many-to-Many property => Authors.
