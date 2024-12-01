@@ -1,6 +1,14 @@
-dotnet add package Microsoft.EntityFrameworkCore
+--- packages to use EF ----
+ add package Microsoft.EntityFrameworkCore
 dotnet add package Microsoft.EntityFrameworkCore.sqlserver
 dotnet add package Microsoft.EntityFrameworkCore.Tools
 
+--- migrations ---
 dotnet ef migrations add InitialCreate
 dotnet ef database update
+
+
+--- git ---
+--- git push ---
+git add .
+git commit -m "first commit" // " " => you can add a comment.
