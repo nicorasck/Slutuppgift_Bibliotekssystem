@@ -9,8 +9,6 @@ class Program
 {
     static void Main(string[] args)
     {
-        Seed.Run(); // To check if there are any duplicates.
-
         System.Console.WriteLine("TEST");
         
         DateTime today = DateTime.Now;

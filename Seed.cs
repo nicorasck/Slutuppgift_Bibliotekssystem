@@ -14,6 +14,7 @@ public class Seed
 
                         try
                         {
+                                // Checking if the values down below do already exists or not, in this case they do exists!
                                 if (!context.Books.Any() && !context.Authors.Any() && !context.BookAuthors.Any())
                                 {
                                         var book1 = new Book
