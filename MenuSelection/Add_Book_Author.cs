@@ -8,6 +8,10 @@ public class AddBook    // Class for adding a Book (Create => CRUD)
         // Creating a new instance of the DataBase context (Mr. Aladdin taught us that).
         using (var context = new AppDbContext())
         {
+            Console.ForegroundColor = ConsoleColor.DarkBlue;
+            System.Console.WriteLine("\nAdd a new Book to the Library.\n");
+            Console.ForegroundColor = ConsoleColor.White;
+
             System.Console.WriteLine("Enter a Title: ");
             var _title = Console.ReadLine();
             System.Console.WriteLine("Enter a Genre: ");
@@ -38,7 +42,7 @@ public class AddBook    // Class for adding a Book (Create => CRUD)
             context.Books.Add(_book);   // Adding the new book into DataBase Context.
             context.SaveChanges();  // Saving the book into the Database.
             //  To let the user know that the book has been added.
-            System.Console.WriteLine($"Congratulations! Your {_book} has been added to the library!");
+            System.Console.WriteLine($"Congratulations! {_title} has been added to the library!");
         }
     }
 }
@@ -49,6 +53,10 @@ public class AddAuthor  // Class for adding an Author (Create => CRUD)
     {
         using (var context = new AppDbContext())
         {
+            Console.ForegroundColor = ConsoleColor.DarkBlue;
+            System.Console.WriteLine("\nAdd a new Author to the Library.\n");
+            Console.ForegroundColor = ConsoleColor.White;
+
             System.Console.WriteLine("Enter a First Name: ");
             var _firstName = Console.ReadLine();
             System.Console.WriteLine("Enter a Last Name: ");
@@ -72,10 +80,8 @@ public class AddAuthor  // Class for adding an Author (Create => CRUD)
             };
             context.Authors.Add(_author);   // Adding the new book into DataBase Context.
             context.SaveChanges();  // Saving the book into the Database.
-            //  To let the user know that the book has been added.
-            System.Console.WriteLine($"Congratulations! Your {_author} has been added to the library!");
+            //  To let the user know that the Author has been added.
+            System.Console.WriteLine($"Congratulations! Author {_firstName} {_lastName}, born in {birthYear}, has been added to the library!");
         }
-
     }
-
 }
