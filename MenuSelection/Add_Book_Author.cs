@@ -1,6 +1,6 @@
 using System;
 using Slutuppgift_Bibliotekssystem;
-public class AddBook
+public class AddBook    // Class for adding a Book (Create => CRUD)
 {
     
     public static void Run()
@@ -43,13 +43,37 @@ public class AddBook
     }
 }
 
-public class AddAuthor
+public class AddAuthor  // Class for adding an Author (Create => CRUD)
 {
     public static void Run()
     {
         using (var context = new AppDbContext())
         {
+            System.Console.WriteLine("Enter a First Name: ");
+            var _firstName = Console.ReadLine();
+            System.Console.WriteLine("Enter a Last Name: ");
+            var _lastName = Console.ReadLine();
 
+            // Using the same structure as above in AddBook for DateOnly but this is for integers instead.
+            System.Console.WriteLine("Enter a Birth Year (yyyy): ");
+            var _birthYear = Console.ReadLine();
+            // Error handling if the user is entering in wrong format!
+            if (!int.TryParse(_birthYear, out int birthYear))
+            {
+                System.Console.WriteLine("The format for Birth Year might be incorrect. Please enter: yyyy, thank you in advance!");
+                return;
+            }
+
+            var _author = new Author    // creating a new book object
+            {
+                FirstName = _firstName,
+                LastName = _lastName,
+                BirthYear = birthYear,
+            };
+            context.Authors.Add(_author);   // Adding the new book into DataBase Context.
+            context.SaveChanges();  // Saving the book into the Database.
+            //  To let the user know that the book has been added.
+            System.Console.WriteLine($"Congratulations! Your {_author} has been added to the library!");
         }
 
     }
