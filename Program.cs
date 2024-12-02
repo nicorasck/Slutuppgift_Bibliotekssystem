@@ -65,10 +65,10 @@ class Program
         switch (menuSel)
         {
             case 1:
-                AddBook();
+                AddBook.Run();
                 break;
             case 2:
-                AddAuthor();
+                AddAuthor.Run();
                 break;
             case 3:
                 LoanBook();
