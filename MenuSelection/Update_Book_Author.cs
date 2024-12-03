@@ -30,7 +30,8 @@ public class UpdateBook // Class for updating a Book (Update => CRUD)
             {
                 updateBook.Title = _title; //   Updating the book title.
             }
-
+            context.SaveChanges();  // Saving the new Title for the Book.
+            System.Console.WriteLine($"You've now renamed the book to {_title}.");
         }
     }
 }
@@ -82,8 +83,9 @@ public class UpdateAuthor   // Class for updating an Author (Update => CRUD)
                     System.Console.WriteLine("The format for Birth Year might be incorrect. Please enter: yyyy, thank you in advance!");
                     return;
                 }
-
             }
+            context.SaveChanges();  // Saving the new bio for the Author.
+            System.Console.WriteLine($"You've now changed the bio to {_firstName} {_lastName}.");
         }
     }
 }
