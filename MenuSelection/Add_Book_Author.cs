@@ -11,7 +11,7 @@ public class AddBook    // Class for adding a Book (Create => CRUD)
         {
             Console.ForegroundColor = ConsoleColor.DarkBlue;
             System.Console.WriteLine("\nAdd a new Book to the Library.\n");
-            Console.ForegroundColor = ConsoleColor.White;
+            Console.ResetColor();
 
             System.Console.WriteLine("Enter a Title: ");
             var _title = Console.ReadLine();
@@ -56,7 +56,7 @@ public class AddAuthor  // Class for adding an Author (Create => CRUD)
         {
             Console.ForegroundColor = ConsoleColor.DarkBlue;
             System.Console.WriteLine("\nAdd a new Author to the Library.\n");
-            Console.ForegroundColor = ConsoleColor.White;
+            Console.ResetColor();
 
             System.Console.WriteLine("Enter a First Name: ");
             var _firstName = Console.ReadLine();

@@ -10,7 +10,7 @@ public class SetRelationship
             //  Instructions for the user.
             Console.ForegroundColor = ConsoleColor.DarkBlue;
             System.Console.WriteLine("To establish a relationship between a Book and an Author you need to enter the specific ID's for each one.\n");
-            Console.ForegroundColor = ConsoleColor.White;
+            Console.ResetColor();
 
             System.Console.WriteLine("1. Enter a Book ID: ");
             //  Error handling

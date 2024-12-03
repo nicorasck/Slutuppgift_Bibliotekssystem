@@ -13,7 +13,7 @@ public class Remove // Class to delete specific data in the Library (Delete  => 
                 System.Console.WriteLine("REMOVE (Book or Author).");
                 Console.ForegroundColor = ConsoleColor.Red;
                 System.Console.WriteLine("YES/NO?");
-                Console.ForegroundColor = ConsoleColor.White;
+                Console.ResetColor();
                 var _input = Console.ReadLine().ToUpper();
                 if (_input == "NO")
                 {
@@ -91,11 +91,11 @@ public class Remove // Class to delete specific data in the Library (Delete  => 
                     .ToList();
                 if (matchedBookAuthor.Any())
                 {
-                    // If the Book has more than one Author the relationship will be erased as well, based on the BookID.
+                    // If the Book has more than one Author, the relationship will be erased as well, based on the BookID.
                     System.Console.WriteLine("Deleting all associations with connected Authors to this Book.");
                 }
 
-                context.BookAuthors.RemoveRange(matchedBookAuthor); // Erasing the relationships.
+                context.BookAuthors.RemoveRange(matchedBookAuthor); // Erasing the relationships. Need to do this before deleting the Book (otherwise th FK will go LOCO).
                 context.Books.Remove(removeBook);   // Deleting the Book.
                 context.SaveChanges();  // Saving changes to the database.
                 System.Console.WriteLine($"You've now erased this book: {removeBook.Title}.");
@@ -135,12 +135,12 @@ public class Remove // Class to delete specific data in the Library (Delete  => 
                     .ToList();
                 if (matchedBookAuthor.Any())
                 {
-                    // If the Book has more than one Author the relationship will be erased as well, based on the BookID.
+                    // If the Author has more than one Book, the relationship will be erased as well, based on the AuthorID.
                     System.Console.WriteLine("Deleting all associations with connected Books to this Author.");
                 }
 
-                context.BookAuthors.RemoveRange(matchedBookAuthor); // Erasing the relationships.
-                context.Authors.Remove(removeAuthor);   // Deleting the Book.
+                context.BookAuthors.RemoveRange(matchedBookAuthor); // Erasing the relationships. Need to do this before deleting the Author (otherwise th FK will go LOCO).
+                context.Authors.Remove(removeAuthor);   // Deleting the Author.
                 context.SaveChanges();  // Saving changes to the database.
                 System.Console.WriteLine($"You've now erased this Author: {removeAuthor.FirstName} {removeAuthor.LastName}.");
         }

@@ -28,12 +28,12 @@ class Program
         int menuSel = 0;
         Console.ForegroundColor = ConsoleColor.DarkBlue;
         Console.WriteLine("Library system - 'Slutuppgift_Bibliotekssystem'\n");
-        Console.ForegroundColor = ConsoleColor.White;
-        System.Console.WriteLine("1 - Add Author.");
-        System.Console.WriteLine("2 - Add Book.");
+        Console.ResetColor();
+        System.Console.WriteLine("1 - Add a Book.");
+        System.Console.WriteLine("2 - Add an Author.");
         System.Console.WriteLine("3 - Loan a Book.");
         System.Console.WriteLine("4 - Return a Book.");
-        System.Console.WriteLine("5 - View Library.");
+        System.Console.WriteLine("5 - View Library (including the Loan History).");
         System.Console.WriteLine("6 - Update a Book Title.");
         System.Console.WriteLine("7 - Update an Author.");
         System.Console.WriteLine("8 - Add Book to an Author");
@@ -49,7 +49,7 @@ class Program
                 Console.ForegroundColor = ConsoleColor.Red;
                 Console.WriteLine("Please select a valid option (1-10). Press any key for Menu.");
                 Console.ReadLine();
-                Console.ForegroundColor = ConsoleColor.White;
+                Console.ResetColor();
                 return MenuSelection();
             }
         }
@@ -58,7 +58,7 @@ class Program
             Console.ForegroundColor = ConsoleColor.Red;
             System.Console.WriteLine("Please select a valid option (1-10). Press any key for Menu.");
             Console.ReadLine();
-            Console.ForegroundColor = ConsoleColor.White;
+            Console.ResetColor();
             return MenuSelection(); //moving back one step -> into the Menu
         }
         return menuSel;
@@ -73,12 +73,12 @@ class Program
             case 2:
                 AddAuthor.Run();
                 break;
-            // case 3:
-            //     LoanBook.Run();
-            //     break;
-            // case 4:
-            //     ReturnBook.Run();
-            //     break;
+            case 3:
+                LoanBook.Run();
+                break;
+            case 4:
+                ReturnBook.Run();
+                break;
             case 5:
                 ViewLibrary.Run();
                 break;
@@ -103,7 +103,7 @@ class Program
                 Console.ForegroundColor = ConsoleColor.Red;
                 System.Console.WriteLine("Eeeey yo, Invalid input! Please try again :)");
                 Console.ReadLine();
-                Console.ForegroundColor = ConsoleColor.White;
+                Console.ResetColor();
                 break;
         }
     }
