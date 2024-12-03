@@ -30,7 +30,7 @@ public class AddBook    // Class for adding a Book (Create => CRUD)
             }
 
             System.Console.WriteLine("This book is now available for loan!");
-            bool _isAvailable = true;   // bc adding a new book to the library the book will be available fpr Loan.
+            bool _isAvailable = true;   // bc adding a new book to the library the book will be available for Loan.
 
             var _book = new Book    // creating a new book object
             {

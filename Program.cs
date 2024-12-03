@@ -35,7 +35,7 @@ class Program
         System.Console.WriteLine("3 - Loan a Book.");
         System.Console.WriteLine("4 - Return a Book.");
         System.Console.WriteLine("5 - View Library.");
-        System.Console.WriteLine("6 - Update a Book.");
+        System.Console.WriteLine("6 - Update a Book Title.");
         System.Console.WriteLine("7 - Update an Author.");
         System.Console.WriteLine("8 - Add Book to an Author");
         Console.ForegroundColor = ConsoleColor.Red;
@@ -48,7 +48,7 @@ class Program
             if (menuSel < 1 || menuSel > 10)
             {
                 Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine("Please select a valid option (1-9). Press any key for Menu.");
+                Console.WriteLine("Please select a valid option (1-10). Press any key for Menu.");
                 Console.ForegroundColor = ConsoleColor.White;
                 return MenuSelection();
             }
@@ -56,7 +56,7 @@ class Program
         catch
         {
             Console.ForegroundColor = ConsoleColor.Red;
-            System.Console.WriteLine("Please select a valid option (1-9). Press any key for Menu.");
+            System.Console.WriteLine("Please select a valid option (1-10). Press any key for Menu.");
             Console.ForegroundColor = ConsoleColor.White;
             return MenuSelection(); //moving back one step -> into the Menu
         }
