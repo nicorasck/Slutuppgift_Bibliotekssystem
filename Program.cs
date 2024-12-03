@@ -9,9 +9,8 @@ using Slutuppgift_Bibliotekssystem;
 class Program
 {
     static void Main(string[] args)
-    {
-        System.Console.WriteLine("TEST");
-        
+    {   
+        Seed.Run();     
         DateTime today = DateTime.Now;
         string formattedDate = "";
         formattedDate = string.Format("{0: dddd}", today);
@@ -49,6 +48,7 @@ class Program
             {
                 Console.ForegroundColor = ConsoleColor.Red;
                 Console.WriteLine("Please select a valid option (1-10). Press any key for Menu.");
+                Console.ReadLine();
                 Console.ForegroundColor = ConsoleColor.White;
                 return MenuSelection();
             }
@@ -57,6 +57,7 @@ class Program
         {
             Console.ForegroundColor = ConsoleColor.Red;
             System.Console.WriteLine("Please select a valid option (1-10). Press any key for Menu.");
+            Console.ReadLine();
             Console.ForegroundColor = ConsoleColor.White;
             return MenuSelection(); //moving back one step -> into the Menu
         }
@@ -72,12 +73,12 @@ class Program
             case 2:
                 AddAuthor.Run();
                 break;
-            case 3:
-                LoanBook.Run();
-                break;
-            case 4:
-                ReturnBook.Run();
-                break;
+            // case 3:
+            //     LoanBook.Run();
+            //     break;
+            // case 4:
+            //     ReturnBook.Run();
+            //     break;
             case 5:
                 ViewLibrary.Run();
                 break;
@@ -91,7 +92,7 @@ class Program
                 SetRelationship.Run();
                 break;
             case 9:
-                RemoveBookAuthor.Run();
+                Remove.Run();
                 break;
             case 10:
                 System.Console.WriteLine("Thank you, see you another time!");
@@ -101,6 +102,7 @@ class Program
                 // Error handling
                 Console.ForegroundColor = ConsoleColor.Red;
                 System.Console.WriteLine("Eeeey yo, Invalid input! Please try again :)");
+                Console.ReadLine();
                 Console.ForegroundColor = ConsoleColor.White;
                 break;
         }
