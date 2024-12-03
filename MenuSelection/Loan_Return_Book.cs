@@ -28,62 +28,79 @@ public class LoanBook
             {
                 //  Here is the famous JOIN-part where authors and books will be shown from the above implementation.
                 var authors = string.Join(", ", _book.BookAuthors.Select(ba => $"{ba.Author.FirstName} {ba.Author.LastName}"));
-                Console.WriteLine($"Book: {_book.Title, -40} Author: {authors}");
+                Console.WriteLine($"Book: {_book.Title,-40} Author: {authors}");
             }
             System.Console.WriteLine("______________________________________________________________\n");
 
             // Personal data for the Borrower - a registration => will be added to the Borrower Table!
-            System.Console.WriteLine("To loan a Book you need to enter some information.\nEnter 'Yes' to proceed or 'No' to cancel.");
+            System.Console.WriteLine("To loan a Book, enter 'Yes' to proceed or 'No' to cancel.");
             var _input = Console.ReadLine().ToUpper();
-            if (_input == "No")
+            if (_input == "NO")
             {
-                System.Console.WriteLine("OK - Please press any key for Menu.");
+                System.Console.WriteLine("Mission aborted - Please press any key for Menu.");
                 Console.ReadLine();
                 return;
             }
-            else if (_input == "Yes")
+            else if (_input != "YES")
             {
-                System.Console.WriteLine("Enter your First Name: ");
-                var _firstName = Console.ReadLine();
-                System.Console.WriteLine("Enter your Last Name: ");
-                var _lastName = Console.ReadLine();
-                System.Console.WriteLine("Enter your Email: ");
-                var _email = Console.ReadLine();
-                System.Console.WriteLine("Enter your Phone Number");
-                var _phoneNumber = Console.ReadLine();
-                // Check if the given Borrower do exists in the Data Base or not.
-                var _borrower = context.Borrowers
-                .FirstOrDefault(b => b.FirstName == _firstName && b.LastName == _lastName && b.Email == _email && b.PhoneNumber == _phoneNumber);
+                System.Console.WriteLine("Invalid Input, you will be redirected to the Menu!");
+                Console.ReadLine();
+                return;
+            }
 
-                if (_borrower == null)
+            // Letting the User enter First- and last name => to find out if the user already exists in the Data Base or not.
+            System.Console.WriteLine("Enter your First Name: ");
+            var _firstName = Console.ReadLine()?.Trim();
+            System.Console.WriteLine("Enter your Last Name: ");
+            var _lastName = Console.ReadLine()?.Trim();
+
+            // Error handling (the names cannot be empty).
+            if (string.IsNullOrWhiteSpace(_firstName) || string.IsNullOrWhiteSpace(_lastName))
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine("First Name and Last Name cannot be empty.");
+                Console.ResetColor();
+                return;
+            }
+
+            // Check if the given Borrower do exists in the Data Base or not.
+            var _borrower = context.Borrowers
+            .FirstOrDefault(b => b.FirstName == _firstName && b.LastName == _lastName); // Not necessary to look for the all properties in Class Borrower!
+
+            if (_borrower == null)
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                System.Console.WriteLine("You are not in the Data Base. A new registration will be proceeded.");
+                Console.ResetColor();
+
+                System.Console.WriteLine("Enter your Email: ");
+                var _email = Console.ReadLine()?.Trim();
+                System.Console.WriteLine("Enter your Phone Number");
+                var _phoneNumber = Console.ReadLine()?.Trim();
+
+                //  Creating a new instance for a Borrower (required properties).
+                _borrower = new Borrower
                 {
-                    Console.ForegroundColor = ConsoleColor.Red;
-                    System.Console.WriteLine("You are not in the Data Base. A new registration is completed!");
-                    Console.ResetColor();
-                    
-                    //  Creating a new instance for a Borrower (required properties).
-                    _borrower = new Borrower
-                    {
-                        FirstName = _firstName,
-                        LastName = _lastName,
-                        Email = _email,
-                        PhoneNumber = _phoneNumber
-                    };
-                    context.Borrowers.Add(_borrower);   // Adding the borrower.
-                    context.SaveChanges();  // Saving the new instance.
-                    string text = $"Borrower '{_firstName} {_lastName}' has been registered...!\n";
-                    foreach (char t in text)
-                    {
-                        Console.Write(t);
-                        Thread.Sleep(70); // Pauses for 70 milliseconds => loading letter by letter
-                    }
+                    FirstName = _firstName,
+                    LastName = _lastName,
+                    Email = _email,
+                    PhoneNumber = _phoneNumber
+                };
+                context.Borrowers.Add(_borrower);   // Adding the borrower.
+                context.SaveChanges();  // Saving the new instance.
+                string text = $"Borrower '{_firstName} {_lastName}' has been registered...!\n";
+                foreach (char t in text)
+                {
+                    Console.Write(t);
+                    Thread.Sleep(100); // Pauses for 100 milliseconds => loading letter by letter
                 }
-            
+            }
+
             // Checking the limit for the borrower (if there are existing loans => also checking that as well).
             var OngoingLoan = context.Lendings
                 .Count(l => l.BorrowerID == _borrower.BorrowerID && !l.IsReturned);
 
-            if (OngoingLoan >= limit)
+            if (OngoingLoan >= limit) // limit is set with a constant => 2;
             {
                 Console.ForegroundColor = ConsoleColor.Red;
                 System.Console.WriteLine($"The loan limit for {_borrower.FirstName} {_borrower.LastName} has reached the limit (max is {limit}!)");
@@ -92,13 +109,53 @@ public class LoanBook
                 return;
             }
 
-            }
-            else
+            // Getting the BookID from the user
+            System.Console.WriteLine("Enter the ID for the Book you would like to loan: ");
+            if (!int.TryParse(Console.ReadLine(), out var bookID))
             {
-                System.Console.WriteLine("Invalid Input, you will be redirected to the Menu!");
-                Console.ReadLine();
+                Console.ForegroundColor = ConsoleColor.Red;
+                System.Console.WriteLine("The ID could not be found, please try again!");
+                Console.ResetColor();
                 return;
             }
+
+            var loanBook = context.Books.Find(bookID);
+            if (loanBook == null)
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine("Book not found. Please check the Book ID and try again.");
+                Console.ResetColor();
+                return;
+            }
+
+            //  Error handling.
+            if (!loanBook.IsAvailable) // Checking if the Book is available or not.
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine("The selected book is currently unavailable.");
+                Console.ResetColor();
+                return;
+            }
+
+            // Creating a new instance in Lending.
+            var _loan = new Lending
+            {
+                BookID = bookID,
+                BorrowerID = _borrower.BorrowerID, // Reference BorrowerID
+                LoanDate = DateTime.Now,
+                IsReturned = false
+            };
+
+            context.Lendings.Add(_loan);    // Adding loan.
+            loanBook.IsAvailable = false;   // Book is now unavailable.
+            context.SaveChanges();          // Saving changes (loan).
+
+            Console.ForegroundColor = ConsoleColor.DarkBlue;
+            System.Console.WriteLine("\nConfirmation:\n");
+            Console.ResetColor();
+            System.Console.WriteLine($"Borrower: {_borrower.FirstName,-30} {_borrower.LastName}");
+            System.Console.WriteLine($"Book: {loanBook.Title,-30}");
+            System.Console.WriteLine($"ID: {bookID,-30}");
         }
     }
 }
@@ -108,6 +165,6 @@ public class ReturnBook
 {
     public static void Run()
     {
-        
+
     }
 }

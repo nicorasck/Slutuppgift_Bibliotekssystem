@@ -14,11 +14,11 @@ public class AddBook    // Class for adding a Book (Create => CRUD)
             Console.ResetColor();
 
             System.Console.WriteLine("Enter a Title: ");
-            var _title = Console.ReadLine();
+            var _title = Console.ReadLine()?.Trim();
             System.Console.WriteLine("Enter a Genre: ");
-            var _genre = Console.ReadLine();
+            var _genre = Console.ReadLine()?.Trim();
             System.Console.WriteLine("Enter a Publisher: ");
-            var _publisher = Console.ReadLine();
+            var _publisher = Console.ReadLine()?.Trim();
 
             System.Console.WriteLine("Enter a Release Date (yyyy-MM-dd): ");
             var _releaseDate = Console.ReadLine();
@@ -59,13 +59,13 @@ public class AddAuthor  // Class for adding an Author (Create => CRUD)
             Console.ResetColor();
 
             System.Console.WriteLine("Enter a First Name: ");
-            var _firstName = Console.ReadLine();
+            var _firstName = Console.ReadLine()?.Trim();
             System.Console.WriteLine("Enter a Last Name: ");
-            var _lastName = Console.ReadLine();
+            var _lastName = Console.ReadLine()?.Trim();
 
             // Using the same structure as above in AddBook for DateOnly but this is for integers instead.
             System.Console.WriteLine("Enter a Birth Year (yyyy): ");
-            var _birthYear = Console.ReadLine();
+            var _birthYear = Console.ReadLine()?.Trim();
             // Error handling if the user is entering in wrong format!
             if (!int.TryParse(_birthYear, out int birthYear))
             {
