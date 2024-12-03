@@ -30,6 +30,8 @@ public class SetRelationship
 
             //  creating a new instance for the new relationship between Book and Author.
             var bookAuthor = new BookAuthor {BookID = bookID, AuthorID = authorID};
+
+            context.BookAuthors.Add(bookAuthor);    // Adding the new relationship between Book and Author.
             context.SaveChanges();  // Saving the new relationship the user have chosen.
             System.Console.WriteLine($"A new instance for BookAuthor is now created!\nA relationship between Book ID: {bookID} and Author ID: {authorID}.");
         }
