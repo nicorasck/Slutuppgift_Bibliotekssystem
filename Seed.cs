@@ -9,7 +9,7 @@ public class Seed
         public static void Run()
         {
                 using (var context = new AppDbContext())
-                {
+                {       // Start transaction
                         var transaction = context.Database.BeginTransaction();
 
                         try

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Dynamic;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
@@ -21,7 +22,7 @@ class Program
             menuSel = MenuSelection();
             MenuExecution(menuSel);
         }
-        while (menuSel != 9);
+        while (menuSel != 10);
     }
     private static int MenuSelection()
     {
@@ -36,14 +37,15 @@ class Program
         System.Console.WriteLine("5 - View Library.");
         System.Console.WriteLine("6 - Update a Book.");
         System.Console.WriteLine("7 - Update an Author.");
+        System.Console.WriteLine("8 - Add Book to an Author");
         Console.ForegroundColor = ConsoleColor.Red;
-        System.Console.WriteLine("8 - REMOVE (Book or Author)");
+        System.Console.WriteLine("9 - REMOVE (Book or Author)");
         Console.ForegroundColor = ConsoleColor.White;
-        System.Console.WriteLine("9 - EXIT");
+        System.Console.WriteLine("10 - EXIT");
         try
         {
             menuSel = Convert.ToInt32(Console.ReadLine());
-            if (menuSel < 1 || menuSel < 9)
+            if (menuSel < 1 || menuSel > 10)
             {
                 Console.ForegroundColor = ConsoleColor.Red;
                 Console.WriteLine("Please select a valid option (1-9). Press any key for Menu.");
@@ -71,24 +73,27 @@ class Program
                 AddAuthor.Run();
                 break;
             case 3:
-                LoanBook();
+                LoanBook.Run();
                 break;
             case 4:
-                ReturnBook();
+                ReturnBook.Run();
                 break;
             case 5:
                 ViewLibrary.Run();
                 break;
             case 6:
-                UpdateBook();
+                UpdateBook.Run();
                 break;
             case 7:
-                UpdateAuthor();
+                UpdateAuthor.Run();
                 break;
             case 8:
-                RemoveBookAuthor();
+                SetRelationship.Run();
                 break;
             case 9:
+                RemoveBookAuthor.Run();
+                break;
+            case 10:
                 System.Console.WriteLine("Thank you, see you another time!");
                 menuSel = 0;    // quitting menu, program will end.
                 return;

@@ -3,7 +3,7 @@ using Slutuppgift_Bibliotekssystem;
 using Microsoft.EntityFrameworkCore.Storage.Json;
 using Microsoft.EntityFrameworkCore;
 
-public class ViewLibrary
+public class ViewLibrary    // Class to read all data in the Library (Read  => CRUD)
 {       
         public static void Run()
         {
