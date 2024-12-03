@@ -6,7 +6,10 @@ public class LoanBook
 {
     public static void Run()
     {
-
+        using (var context = new AppDbContext())
+        {
+            
+        }
     }
 }
 

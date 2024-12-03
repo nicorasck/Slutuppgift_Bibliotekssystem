@@ -16,16 +16,17 @@ public class ViewLibrary    // Class to read all data in the Library (Read  => C
                 .ThenInclude(ba => ba.Author)
                 .ToList();
 
+            Console.ForegroundColor = ConsoleColor.DarkBlue;
+            System.Console.WriteLine("\nLibrary - Author and their Books:\n");
+            Console.ResetColor();
             foreach (var _book in BookAuthor)
             {
                 //  Here is the famous JOIN-part where authors and books will be shown from the above implementation.
                 var authors = string.Join(", ", _book.BookAuthors.Select(ba => $"{ba.Author.FirstName} {ba.Author.LastName}"));
-                Console.WriteLine($"Book: {_book.Title}, Author: {authors}");
+                Console.WriteLine($"Book: {_book.Title, -40} Author: {authors}");
             }
-        }
 
-        using (var context = new AppDbContext())
-        {   // JOIN-part where the user can take a look att the history concerning loans.
+            System.Console.WriteLine("______________________________________________________________\n");
             var loanHistory = context.Lendings
             .Include(l => l.Book)   // Entity of the Book will be included, otherwise you cannot track the history for sure.
             .ThenInclude(ba => ba.BookAuthors)  // Including BookAuthors, if there are any in the entity of Books.
@@ -41,8 +42,9 @@ public class ViewLibrary    // Class to read all data in the Library (Read  => C
             if (!loanHistory.Any())
             {
                 Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine("\nNo history match found for Loan.");
+                Console.WriteLine("No history match found for Loan.");
                 Console.ResetColor();
+                System.Console.WriteLine("(Press any key for Menu)\n");
             }
             else
             {
@@ -60,7 +62,9 @@ public class ViewLibrary    // Class to read all data in the Library (Read  => C
                     Console.WriteLine($"{"Is Returned:", -20} {(item.IsReturned ? "Yes" : "No")}");
                     System.Console.WriteLine();
                 }
+                System.Console.WriteLine("\n(Press any key for Menu)");
             }
+            Console.ReadLine();
         }
     }
 }
