@@ -12,8 +12,8 @@ public class ViewLibrary    // Class to read all data in the Library (Read  => C
         {
             // JOIN
             var BookAuthor = context.Books
-                .Include(b => b.BookAuthors)
-                .ThenInclude(ba => ba.Author)
+                .Include(ba => ba.BookAuthors)
+                .ThenInclude(a => a.Author)
                 .ToList();
 
             Console.ForegroundColor = ConsoleColor.DarkBlue;
@@ -28,9 +28,9 @@ public class ViewLibrary    // Class to read all data in the Library (Read  => C
 
             System.Console.WriteLine("______________________________________________________________\n");
             var loanHistory = context.Lendings
-            .Include(l => l.Book)   // Entity of the Book will be included, otherwise you cannot track the history for sure.
-            .ThenInclude(ba => ba.BookAuthors)  // Including BookAuthors, if there are any in the entity of Books.
-            .Select(lh => new
+                .Include(l => l.Book)   // Entity of the Book will be included, otherwise you cannot track the history for sure.
+                .ThenInclude(ba => ba.BookAuthors)  // Including BookAuthors, if there are any in the entity of Books.
+                .Select(lh => new
             {
                 lh.Book.Title,  // Book Title.
                 lh.Borrower.BorrowerID, // Showing the ID for the borrower, in this case is not necessary to show name.
