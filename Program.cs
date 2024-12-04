@@ -56,7 +56,7 @@ class Program
         catch
         {
             Console.ForegroundColor = ConsoleColor.Red;
-            System.Console.WriteLine("Please select a valid option (1-11). Press any key for Menu.");
+            System.Console.WriteLine("Please select a valid option (1-10). Press any key for Menu.");
             Console.ResetColor();
             Console.ReadLine();
             return MenuSelection(); //moving back one step -> into the Menu
