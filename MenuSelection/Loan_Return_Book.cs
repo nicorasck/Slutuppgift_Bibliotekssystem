@@ -3,7 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Identity.Client;
 
-public class LoanBook
+public class LoanBook   // Class to Loan a book and to add data for a Borrower.
 {
     public static void Run()
     {
@@ -165,6 +165,61 @@ public class ReturnBook
 {
     public static void Run()
     {
+        using (var context = new AppDbContext())
+        {
+            System.Console.WriteLine("Please enter the First Name of the borrower: ");
+            var _boFirstName = Console.ReadLine();
+            System.Console.WriteLine("Please enter the Last Name of the borrower: ");
+            var _boLastName = Console.ReadLine();
 
+            System.Console.WriteLine($"Hello {_boFirstName} {_boLastName}, please enter the Book ID: ");
+            if (!int.TryParse(Console.ReadLine(), out var bookID))
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                System.Console.WriteLine("The ID could not be found, please try again!");
+                Console.ResetColor();
+                Console.ReadLine();
+                return;
+            }
+
+            // Checking if the given name combination does exists in the entity for Borrower.
+            var _borrower = context.Borrowers
+                .FirstOrDefault(b => b.FirstName == _boFirstName && b.LastName == _boLastName);
+
+            if (_borrower == null)
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                System.Console.WriteLine("The name of the borrower cannot be found in the Data Base!");
+                Console.ResetColor();
+                return;
+            }
+
+            // Checking if there are any ongoing loans => if there are any connections between the borrower and book(s).
+            var _loan = context.Lendings
+                .FirstOrDefault(l => l.BorrowerID == _borrower.BorrowerID && l.BookID == bookID && !l.IsReturned);
+
+            if (_loan == null)
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                System.Console.WriteLine($"Cannot find any ongoing loan for {_boFirstName} {_boLastName} with this book!");
+                Console.ResetColor();
+                return;
+            }
+
+            _loan.IsReturned = true; // If match, the book will be marked as returned.
+            _loan.ReturnDate = DateTime.Now; // Register the return date.
+            
+            var _book = context.Books.Find(bookID); // Sets the new status for the Book bc it is returned.
+            if (_book != null)
+            {
+                _book.IsAvailable = true;
+            }
+            context.SaveChanges();  // Saving the new changes/status.
+            System.Console.WriteLine($"Thank you {_boFirstName} {_boLastName}, the Book is now returned (ID: {bookID}).");
+            Console.ForegroundColor = ConsoleColor.Gray;
+            System.Console.WriteLine("(Press any key for Menu)");
+            Console.ResetColor();
+            Console.ReadLine();
+        }
     }
 }

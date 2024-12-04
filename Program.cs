@@ -10,7 +10,7 @@ class Program
 {
     static void Main(string[] args)
     {   
-        Seed.Run();     
+        Seed.Run(); // If the existing Seed-Data already have been running before, the user till be notified.    
         DateTime today = DateTime.Now;
         string formattedDate = "";
         formattedDate = string.Format("{0: dddd}", today);
@@ -36,11 +36,11 @@ class Program
         System.Console.WriteLine("5 - View Library (including the Loan History).");
         System.Console.WriteLine("6 - Update a Book Title.");
         System.Console.WriteLine("7 - Update an Author.");
-        System.Console.WriteLine("8 - Add Book to an Author");
+        System.Console.WriteLine("8 - Add Book to an Author.");
         Console.ForegroundColor = ConsoleColor.Red;
-        System.Console.WriteLine("9 - REMOVE (Book or Author)");
-        Console.ForegroundColor = ConsoleColor.White;
-        System.Console.WriteLine("10 - EXIT");
+        System.Console.WriteLine("9 - REMOVE (Book or Author).");
+        Console.ResetColor();
+        System.Console.WriteLine("10 - EXIT.");
         try
         {
             menuSel = Convert.ToInt32(Console.ReadLine());
@@ -56,9 +56,9 @@ class Program
         catch
         {
             Console.ForegroundColor = ConsoleColor.Red;
-            System.Console.WriteLine("Please select a valid option (1-10). Press any key for Menu.");
-            Console.ReadLine();
+            System.Console.WriteLine("Please select a valid option (1-11). Press any key for Menu.");
             Console.ResetColor();
+            Console.ReadLine();
             return MenuSelection(); //moving back one step -> into the Menu
         }
         return menuSel;
@@ -102,8 +102,8 @@ class Program
                 // Error handling
                 Console.ForegroundColor = ConsoleColor.Red;
                 System.Console.WriteLine("Eeeey yo, Invalid input! Please try again :)");
-                Console.ReadLine();
                 Console.ResetColor();
+                Console.ReadLine();
                 break;
         }
     }
