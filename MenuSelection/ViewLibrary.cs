@@ -70,6 +70,20 @@ public class ViewLibrary    // Class to read all data in the Library (Read  => C
 }
 
 /*
+
+var loanHistory = context.Lendings
+    .Include(l => l.Book)   // Entity of the Book will be included, otherwise you cannot track the history for sure.
+    .ThenInclude(ba => ba.BookAuthors)  // Including BookAuthors, if there are any in the entity of Books.
+    .Select(lh => new
+{
+    lh.Book.Title,  // Book Title.
+    lh.Borrower.BorrowerID, // Showing the ID for the borrower, in this case is not necessary to show name.
+    lh.LoanDate,    // Date when a Book was borrowed.
+    lh.ReturnDate,  // Date when a Book was returned or is going to be returned.
+    lh.IsReturned   // Showing if a Book is on loan or not  => 'IsAvailable'.
+}).ToList();
+
+
 - - - How it will look like in SQL (when creating a new Query) - - -
 
 
