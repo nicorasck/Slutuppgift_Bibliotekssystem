@@ -36,6 +36,9 @@ Entities and Attributes:
     - Email (VARCHAR) (NOT NULL)
     - PhoneNumber (VARCHAR) (NOT NULL)
 
+    LendingObject:
+    (this one can be implemented if there are e.g. two books ('copies'.))
+
 ============================ ER-Relationship ============================
 
 Book and Author:
@@ -43,7 +46,8 @@ Book and Author:
                             book can have several of authors.
 
 Book and Lending:
-    One-to-Many         --  a book can have multiple loans over time.
+    One-to-Many         --  Lending can be or several of books.
+                            (you can borrow a maximum of 2 of books in this program)
 
 Borrower and Lending:
-    One-to-Many         --  you can borrow several of books, multiple loans.
+    One-to-One          --  A loan requires a borrower.
