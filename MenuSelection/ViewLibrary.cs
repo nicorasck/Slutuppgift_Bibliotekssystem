@@ -33,6 +33,7 @@ public class ViewLibrary    // Class to read all data in the Library (Read  => C
                 .Select(lh => new
             {
                 lh.Book.Title,  // Book Title.
+                lh.BookID,  // Book ID
                 lh.Borrower.BorrowerID, // Showing the ID for the borrower, in this case is not necessary to show name.
                 lh.Borrower.FirstName, // Showing the borrower first name.
                 lh.Borrower.LastName, // Showing the borrower last name.
@@ -57,13 +58,12 @@ public class ViewLibrary    // Class to read all data in the Library (Read  => C
                 foreach (var item in loanHistory)
                 {
                     // Adjust the width for each column as necessary
-                    Console.WriteLine($"{"Title:", -20} {item.Title}");
-                    System.Console.WriteLine($"Borrower: {item.FirstName,-20} {item.LastName}");
+                    Console.WriteLine($"{"Title:", -20} {item.Title} (Book ID: {item.BookID})");
+                    System.Console.WriteLine($"{"Borrower:", -20} {item.FirstName} {item.LastName}");
                     Console.WriteLine($"{"Borrower ID:", -20} {item.BorrowerID}");
                     Console.WriteLine($"{"Loan Date:", -20} {item.LoanDate.ToShortDateString()}");
                     Console.WriteLine($"{"Return Date:", -20} {item.ReturnDate.ToShortDateString() ?? "Not Returned"}");
                     Console.WriteLine($"{"Is Returned:", -20} {(item.IsReturned ? "Yes" : "No")}");
-                    System.Console.WriteLine();
                 }
                 System.Console.WriteLine("\n(Press any key for Menu)");
             }
@@ -95,6 +95,7 @@ var loanHistory = context.Lendings
 
 SELECT
     b.Title,                -- Book Title
+    b.BookID,               -- Book ID
     bo.BorrowerID,          -- Showing the ID for the borrower, in this case is not necessary to show name.
     bo.BorrowerFirstName,   -- Showing the borrower first name.
     bo.BorrowerLastName,    -- Showing the borrower last name.

@@ -141,11 +141,13 @@ public class LoanBook   // Class to Loan a book and to add data for a Borrower.
                 }
 
                 // Creating a new instance in Lending.
+                var _period = 10; // Sets the loan period for 10 days
                 var _loan = new Lending
                 {
                     BookID = bookID,
                     BorrowerID = _borrower.BorrowerID, // Reference BorrowerID
                     LoanDate = DateTime.Now,
+                    ReturnDate = DateTime.Now.AddDays(_period),
                     IsReturned = false
                 };
 
@@ -159,6 +161,9 @@ public class LoanBook   // Class to Loan a book and to add data for a Borrower.
                 System.Console.WriteLine($"Borrower: {_borrower.FirstName,-30} {_borrower.LastName}");
                 System.Console.WriteLine($"Book: {loanBook.Title,-30}");
                 System.Console.WriteLine($"ID: {bookID,-30}");
+                Console.ForegroundColor = ConsoleColor.Red;
+                System.Console.WriteLine($"\nPlease return the book by {DateTime.Now.AddDays(_period):yyyy-MM-dd}.");
+                Console.ResetColor();
                 Console.ReadLine();
                 return;
             }
@@ -202,7 +207,9 @@ public class ReturnBook
                     Console.ResetColor();
                     continue;
                 }
-
+#region OverDue
+                // A code for an overdue would suit here (?)
+#endregion
                 // Checking if there are any ongoing loans => if there are any connections between the borrower and book(s).
                 var _loan = context.Lendings
                     .FirstOrDefault(l => l.BorrowerID == _borrower.BorrowerID && l.BookID == bookID && !l.IsReturned);

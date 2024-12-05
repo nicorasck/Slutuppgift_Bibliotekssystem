@@ -21,7 +21,7 @@ class Program
             menuSel = MenuSelection();
             MenuExecution(menuSel);
         }
-        while (menuSel != 4);
+        while (menuSel != 5);
     }
     private static int MenuSelection()
     {
@@ -37,10 +37,10 @@ class Program
         try
         {
             menuSel = Convert.ToInt32(Console.ReadLine());
-            if (menuSel < 1 || menuSel > 4)
+            if (menuSel < 1 || menuSel > 5)
             {
                 Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine("Please select a valid option (1-4). Press any key for Menu.");
+                Console.WriteLine("Please select a valid option (1-5). Press any key for Menu.");
                 Console.ReadLine();
                 Console.ResetColor();
                 return MenuSelection();
@@ -49,7 +49,7 @@ class Program
         catch
         {
             Console.ForegroundColor = ConsoleColor.Red;
-            System.Console.WriteLine("Please select a valid option (1-4). Press any key for Menu.");
+            System.Console.WriteLine("Please select a valid option (1-5). Press any key for Menu.");
             Console.ResetColor();
             Console.ReadLine();
             return MenuSelection(); //moving back one step -> into the Menu
