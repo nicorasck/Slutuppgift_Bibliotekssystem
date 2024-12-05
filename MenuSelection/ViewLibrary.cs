@@ -58,9 +58,8 @@ public class ViewLibrary    // Class to read all data in the Library (Read  => C
                 foreach (var item in loanHistory)
                 {
                     // Adjust the width for each column as necessary
-                    Console.WriteLine($"{"Title:", -20} {item.Title} (Book ID: {item.BookID})");
-                    System.Console.WriteLine($"{"Borrower:", -20} {item.FirstName} {item.LastName}");
-                    Console.WriteLine($"{"Borrower ID:", -20} {item.BorrowerID}");
+                    Console.WriteLine($"{"Title:", -20} {item.Title, -30} {"ID:", -1} {item.BookID}");
+                    Console.WriteLine($"{"Borrower:", -20} {item.FirstName} {item.LastName,-21} {"ID:", -1} {item.BorrowerID}");
                     Console.WriteLine($"{"Loan Date:", -20} {item.LoanDate.ToShortDateString()}");
                     Console.WriteLine($"{"Return Date:", -20} {item.ReturnDate.ToShortDateString() ?? "Not Returned"}");
                     Console.WriteLine($"{"Is Returned:", -20} {(item.IsReturned ? "Yes" : "No")}");
