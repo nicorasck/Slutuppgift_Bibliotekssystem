@@ -131,7 +131,9 @@ public class Seed
                                 }
                                 else
                                 {
+                                        Console.ForegroundColor = ConsoleColor.Gray;
                                         System.Console.WriteLine("Already inserted.");
+                                        Console.ResetColor();
                                 }
                         }
                         catch (Exception ex)    // took this part from Mr. Aladdin, can't invent the wheel all the time. TY Bruh! :)

@@ -7,7 +7,7 @@ public class Maintenance
     public static void Run()
     {
         Console.ForegroundColor = ConsoleColor.DarkBlue;
-        Console.WriteLine("Maintenance\n");
+        Console.WriteLine("\nMaintenance\n");
         Console.ResetColor();
         int menuSel = 0;
         do
@@ -15,14 +15,11 @@ public class Maintenance
             menuSel = MenuSelection();
             MenuExecution(menuSel);
         }
-        while (menuSel != 10);
+        while (menuSel != 7);
     }
         private static int MenuSelection()
         {
             int menuSel = 0;
-            Console.ForegroundColor = ConsoleColor.DarkBlue;
-            Console.WriteLine("Library system - 'Slutuppgift_Bibliotekssystem'\n");
-            Console.ResetColor();
             System.Console.WriteLine("1 - Add an Author.");
             System.Console.WriteLine("2 - Add a Book.");
             System.Console.WriteLine("3 - Update an Author.");
@@ -38,7 +35,7 @@ public class Maintenance
                 if (menuSel < 1 || menuSel > 7)
                 {
                     Console.ForegroundColor = ConsoleColor.Red;
-                    Console.WriteLine("Please select a valid option (1-10). Press any key for Menu.");
+                    Console.WriteLine("Please select a valid option (1-7). Press any key for Menu.");
                     Console.ReadLine();
                     Console.ResetColor();
                     return MenuSelection();
@@ -47,7 +44,7 @@ public class Maintenance
             catch
             {
                 Console.ForegroundColor = ConsoleColor.Red;
-                System.Console.WriteLine("Please select a valid option (1-10). Press any key for Menu.");
+                System.Console.WriteLine("Please select a valid option (1-7). Press any key for Menu.");
                 Console.ResetColor();
                 Console.ReadLine();
                 return MenuSelection(); //moving back one step -> into the Menu

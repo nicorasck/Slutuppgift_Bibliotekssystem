@@ -23,7 +23,7 @@ public class ViewLibrary    // Class to read all data in the Library (Read  => C
             {
                 //  Here is the famous JOIN-part where authors and books will be shown from the above implementation.
                 var authors = string.Join(", ", _book.BookAuthors.Select(ba => $"{ba.Author.FirstName} {ba.Author.LastName}"));
-                Console.WriteLine($"Book: {_book.Title, -40} Author: {authors}");
+                Console.WriteLine($"Author: {authors, -30} Book ID: {_book.BookID, -5} Title: {_book.Title, -30} Genre: {_book.Genre, -15} Publisher: {_book.Publisher}");
             }
 
             System.Console.WriteLine("______________________________________________________________\n");

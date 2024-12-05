@@ -26,7 +26,7 @@ public class Remove // Class to delete specific data in the Library (Delete  => 
                 {
                     System.Console.WriteLine("\n1 - Remove a Book.");
                     System.Console.WriteLine("2 - Remove an Author.");
-                    System.Console.WriteLine("3 - Go back to the main menu.");
+                    System.Console.WriteLine("3 - Go back to the Main Menu.");
 
                     var _menuInput = Console.ReadLine();
                     switch (_menuInput)
@@ -57,23 +57,42 @@ public class Remove // Class to delete specific data in the Library (Delete  => 
         }
     }
 
+#region RemoveBook
     private static void RemoveBook()
     {
         using (var context = new AppDbContext())
         {
+            while (true)
+            {
                 var Books = context.Books.ToList(); // Creating a local variable to the list of Books in the library.
-                System.Console.WriteLine("Enter a Book ID: ");
+                System.Console.WriteLine("Enter a Book ID to remove (type 'LIST' to view all books or 'Q' to quit): ");
+                var _input = Console.ReadLine()?.Trim();
+
+                // If the user would like to see the books before removing.
+                if(_input?.ToUpper() == "LIST")
+                {
+                    Console.ForegroundColor = ConsoleColor.DarkBlue;
+                    System.Console.WriteLine("List of Books:");
+                    Console.ResetColor();
+                    foreach (var _book in Books)
+                    {
+                        System.Console.WriteLine($"Book ID: {_book.BookID, -10} Title: {_book.Title, -30} {_book.Genre}");
+                    }
+                    continue;
+                }
+
+                // If the user would like to exit.
+                if (_input?.ToUpper() == "Q")
+                {
+                    System.Console.WriteLine("Redirecting to Menu for Remove.");
+                    break;
+                }
+
                 // Error handling if there is no Book with entered ID.
                 if (!int.TryParse(Console.ReadLine(), out var bookID))
                 {
                     System.Console.WriteLine("The ID could not be found, please try again!");
-                    //  Listing all Books with ID to show the user which Book can be erased.
-                    foreach (var _book in Books)
-                    {
-                        System.Console.WriteLine($"Title: {_book.Title} - ID: {_book.BookID}");
-                    }
-                    Console.ReadLine();
-                    return;
+                    continue;
                 }
 
                 // Check if the book exists in the database
@@ -89,33 +108,57 @@ public class Remove // Class to delete specific data in the Library (Delete  => 
                 var matchedBookAuthor = context.BookAuthors
                     .Where(ba => ba.BookID == bookID)
                     .ToList();
+
                 if (matchedBookAuthor.Any())
                 {
                     // If the Book has more than one Author, the relationship will be erased as well, based on the BookID.
                     System.Console.WriteLine("Deleting all associations with connected Authors to this Book.");
+                    context.BookAuthors.RemoveRange(matchedBookAuthor); // Erasing the relationships. Need to do this before deleting the Book (otherwise th FK will go LOCO).
                 }
 
-                context.BookAuthors.RemoveRange(matchedBookAuthor); // Erasing the relationships. Need to do this before deleting the Book (otherwise th FK will go LOCO).
                 context.Books.Remove(removeBook);   // Deleting the Book.
                 context.SaveChanges();  // Saving changes to the database.
                 System.Console.WriteLine($"You've now erased this book: {removeBook.Title}.");
+                break;
+            }
         }
     }
+#endregion
+
+#region RemoveAuthor
     private static void RemoveAuthor()
     {
         using (var context = new AppDbContext())
         {
+            while (true)
+            {
                 var Authors = context.Authors.ToList(); // Creating a local variable to the list of Authors in the library.
-                System.Console.WriteLine("Enter a Book ID: ");
+                System.Console.WriteLine("Enter an Author ID to remove (type 'LIST' to view all books or 'Q' to quit): ");
+                var _input = Console.ReadLine()?.Trim();
+
+                if (_input?.ToUpper() == "LIST")
+                {
+                    Console.ForegroundColor = ConsoleColor.DarkBlue;
+                    System.Console.WriteLine("List of Authors:");
+                    Console.ResetColor();
+                    foreach (var _author in Authors)
+                    {
+                        System.Console.WriteLine($"Author ID: {_author.AuthorID, -10} Name: {_author.FirstName} {_author.LastName}");
+                    }
+                    continue;
+                }
+
+                // If the user would like to exit.
+                if (_input?.ToUpper() == "Q")
+                {
+                    System.Console.WriteLine("Redirecting to Menu for Remove.");
+                    break;
+                }
+
                 // Error handling if there is no Author with entered ID.
                 if (!int.TryParse(Console.ReadLine(), out var authorID))
                 {
                     System.Console.WriteLine("The ID could not be found, please try again!");
-                    //  Listing all Authors with ID to show the user which Author can be erased.
-                    foreach (var _author in Authors)
-                    {
-                        System.Console.WriteLine($"Author name: {_author.FirstName} {_author.LastName}");
-                    }
                     Console.ReadLine();
                     return;
                 }
@@ -133,17 +176,21 @@ public class Remove // Class to delete specific data in the Library (Delete  => 
                 var matchedBookAuthor = context.BookAuthors
                     .Where(ba => ba.AuthorID == authorID)
                     .ToList();
+
                 if (matchedBookAuthor.Any())
                 {
                     // If the Author has more than one Book, the relationship will be erased as well, based on the AuthorID.
                     System.Console.WriteLine("Deleting all associations with connected Books to this Author.");
+                    context.BookAuthors.RemoveRange(matchedBookAuthor); // Erasing the relationships. Need to do this before deleting the Author (otherwise th FK will go LOCO).
                 }
 
-                context.BookAuthors.RemoveRange(matchedBookAuthor); // Erasing the relationships. Need to do this before deleting the Author (otherwise th FK will go LOCO).
                 context.Authors.Remove(removeAuthor);   // Deleting the Author.
                 context.SaveChanges();  // Saving changes to the database.
                 System.Console.WriteLine($"You've now erased this Author: {removeAuthor.FirstName} {removeAuthor.LastName}.");
+                break;
+            }
         }
     }
+#endregion
 
 }
