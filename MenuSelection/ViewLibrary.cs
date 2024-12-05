@@ -81,6 +81,7 @@ var loanHistory = context.Lendings
     .Select(lh => new
 {
     lh.Book.Title,  // Book Title.
+    lh.BookID,  // Book ID
     lh.Borrower.BorrowerID, // Showing the ID for the borrower, in this case is not necessary to show name.
     lh.Borrower.FirstName,  // Showing the borrower first name.
     lh.Borrower.LastName,   // Showing the borrower last name.

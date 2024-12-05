@@ -76,7 +76,7 @@ public class LoanBook   // Class to Loan a book and to add data for a Borrower.
 
                 // Check if the given Borrower do exists in the Data Base or not.
                 var _borrower = context.Borrowers
-                .FirstOrDefault(b => b.FirstName == _firstName && b.LastName == _lastName); // Not necessary to look for the all properties in Class Borrower!
+                    .FirstOrDefault(b => b.FirstName == _firstName && b.LastName == _lastName); // Not necessary to look for the all properties in Class Borrower!
 
                 if (_borrower == null)
                 {
@@ -114,8 +114,26 @@ public class LoanBook   // Class to Loan a book and to add data for a Borrower.
                 if (OngoingLoan >= limit) // limit is set with a constant => 2;
                 {
                     Console.ForegroundColor = ConsoleColor.Red;
-                    System.Console.WriteLine($"The loan limit for {_borrower.FirstName} {_borrower.LastName} has reached the limit (max is {limit}!)");
+                    System.Console.WriteLine($"The loan limit for {_borrower.FirstName} {_borrower.LastName} has reached the limit (max is {limit}!)\n");
                     Console.ResetColor();
+
+                    // Showing loaned books by borrower at the moment.
+                    var currentLoan = context.Lendings
+                        .Where(l => l.BorrowerID == _borrower.BorrowerID && !l.IsReturned)
+                        .Include(l => l.Book)
+                        .ToList();
+
+                    if (currentLoan.Any())
+                    {
+                        Console.ForegroundColor = ConsoleColor.DarkBlue;
+                        System.Console.WriteLine("The books you've loaned:");
+                        Console.ResetColor();
+                        foreach (var book in currentLoan)
+                        {
+                            System.Console.WriteLine($"Title: {book.Book.Title, -30} Loan Date: {book.LoanDate.ToShortDateString()}");
+                        }
+                        System.Console.WriteLine();
+                    }
                     Console.ReadLine();
                     return;
                 }
