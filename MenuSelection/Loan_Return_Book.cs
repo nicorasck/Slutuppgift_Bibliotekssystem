@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Identity.Client;
 
+#region LoanBook
 public class LoanBook   // Class to Loan a book and to add data for a Borrower.
 {
     public static void Run()
@@ -159,8 +160,9 @@ public class LoanBook   // Class to Loan a book and to add data for a Borrower.
         }
     }
 }
+#endregion
 
-
+#region ReturnBook
 public class ReturnBook
 {
     public static void Run()
@@ -223,3 +225,4 @@ public class ReturnBook
         }
     }
 }
+#endregion

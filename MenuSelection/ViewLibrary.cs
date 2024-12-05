@@ -69,6 +69,7 @@ public class ViewLibrary    // Class to read all data in the Library (Read  => C
     }
 }
 
+#region SQL_Notes
 /*
 
 var loanHistory = context.Lendings
@@ -101,3 +102,4 @@ LEFT JOIN
     BookAuthors AS ba ON b.BookId = ba.BookId  -- to show any details for the book even if there are no matched Authors.
 
 */
+#endregion

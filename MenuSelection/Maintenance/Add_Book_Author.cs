@@ -1,6 +1,8 @@
 using System;
 using Slutuppgift_Bibliotekssystem;
 using Microsoft.EntityFrameworkCore.Storage.Json;
+
+#region AddBook
 public class AddBook    // Class for adding a Book (Create => CRUD)
 {
     
@@ -47,7 +49,9 @@ public class AddBook    // Class for adding a Book (Create => CRUD)
         }
     }
 }
+#endregion
 
+#region AddAuthor
 public class AddAuthor  // Class for adding an Author (Create => CRUD)
 {
     public static void Run()
@@ -86,3 +90,4 @@ public class AddAuthor  // Class for adding an Author (Create => CRUD)
         }
     }
 }
+#endregion
