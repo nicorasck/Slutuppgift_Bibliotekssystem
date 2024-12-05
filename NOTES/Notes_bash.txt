@@ -23,3 +23,4 @@ git commit -m "first commit" // " " => you can add a comment.
 6. In all functions - adjust to BookName or AuthorName
 instead of ID's.
 7. Loan a book - show status.
+8. List all the books a borrower have atm.

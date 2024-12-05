@@ -13,19 +13,20 @@ public class LoanBook   // Class to Loan a book and to add data for a Borrower.
             while (true)
             {
                 const int limit = 2;    // Sets a limit for borrower (can only loan two books at the time). 
-                System.Console.WriteLine("These Books are available at the moment:\n");
+                System.Console.WriteLine("\nThese Books are available at the moment:\n");
                 var Books = context.Books
                     .Include(ba => ba.BookAuthors)
                     .ThenInclude(a => a.Author)
-                    .Include(b => b.IsAvailable)
+                    .Include(b => b.Lendings)
                     .ToList();
 
                 if (!Books.Any())
                 {
                     Console.ForegroundColor = ConsoleColor.Red;
-                    System.Console.WriteLine("There are no Books available, please come back later!");
+                    System.Console.WriteLine("\nThere are no Books available, please come back later!\n");
                     Console.ResetColor();
-                    continue;
+                    Console.ReadLine();
+                    break;
                 }
 
                 foreach (var _book in Books)
@@ -33,12 +34,13 @@ public class LoanBook   // Class to Loan a book and to add data for a Borrower.
                     //  Here is the famous JOIN-part where authors and books will be shown from the above implementation.
                     var authors = string.Join(", ", _book.BookAuthors.Select(ba => $"{ba.Author.FirstName} {ba.Author.LastName}"));
                     // Looking for the last status concerning the loan for the book.
-                    var bookStatus = _book.Lendings.OrderByDescending(ld => ld.LoanDate).FirstOrDefault();
-                    var _status = bookStatus != null && bookStatus.IsReturned ? "Yes" : "No";
+                    var bookStatus = context.Lendings
+                    .Any(l => l.BookID == _book.BookID && !l.IsReturned);
                     
-                    Console.WriteLine($"Book ID: {_book.BookID,-10} Title: {_book.Title,-40} Author: {authors, -30} Is Available: {_status}");
-                    Console.ReadLine();
+                    Console.WriteLine($"Book ID: {_book.BookID,-5} Title: {_book.Title,-40} Author: {authors, -25} Is out for loan: {(bookStatus ? "Yes" : "No")}");
                 }
+                System.Console.WriteLine("\nPress any key to continue.");
+                Console.ReadLine();
                 System.Console.WriteLine("______________________________________________________________\n");
 
                 // Personal data for the Borrower - a registration => will be added to the Borrower Table!
@@ -212,6 +214,7 @@ public class ReturnBook
                     Console.ForegroundColor = ConsoleColor.Red;
                     System.Console.WriteLine("The name of the borrower cannot be found in the Data Base!");
                     Console.ResetColor();
+                    Console.ReadLine();
                     continue;
                 }
 #region OverDue
@@ -226,7 +229,8 @@ public class ReturnBook
                     Console.ForegroundColor = ConsoleColor.Red;
                     System.Console.WriteLine($"Cannot find any ongoing loan for {_boFirstName} {_boLastName} with this book!");
                     Console.ResetColor();
-                    continue;
+                    Console.ReadLine();
+                    return;
                 }
 
                 _loan.IsReturned = true; // If match, the book will be marked as returned.

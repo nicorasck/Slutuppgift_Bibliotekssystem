@@ -63,6 +63,7 @@ public class ViewLibrary    // Class to read all data in the Library (Read  => C
                     Console.WriteLine($"{"Loan Date:", -20} {item.LoanDate.ToShortDateString()}");
                     Console.WriteLine($"{"Return Date:", -20} {item.ReturnDate.ToShortDateString() ?? "Not Returned"}");
                     Console.WriteLine($"{"Is Returned:", -20} {(item.IsReturned ? "Yes" : "No")}");
+                    System.Console.WriteLine();
                 }
                 System.Console.WriteLine("\n(Press any key for Menu)");
             }
