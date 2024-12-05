@@ -150,6 +150,7 @@ public class Remove // Class to delete specific data in the Library (Delete  => 
                     {
                         System.Console.WriteLine($"Author ID: {_author.AuthorID,-10} Name: {_author.FirstName} {_author.LastName}");
                     }
+                    Console.ReadLine();
                     continue;
                 }
 
@@ -157,6 +158,7 @@ public class Remove // Class to delete specific data in the Library (Delete  => 
                 if (_input?.ToUpper() == "Q")
                 {
                     System.Console.WriteLine("Redirecting to Menu for Remove.");
+                    Console.ReadLine();
                     break;
                 }
 
@@ -187,11 +189,13 @@ public class Remove // Class to delete specific data in the Library (Delete  => 
                     // If the Author has more than one Book, the relationship will be erased as well, based on the AuthorID.
                     System.Console.WriteLine("Deleting all associations with connected Books to this Author.");
                     context.BookAuthors.RemoveRange(matchedBookAuthor); // Erasing the relationships. Need to do this before deleting the Author (otherwise th FK will go LOCO).
+                    Console.ReadLine();
                 }
 
                 context.Authors.Remove(removeAuthor);   // Deleting the Author.
                 context.SaveChanges();  // Saving changes to the database.
                 System.Console.WriteLine($"You've now erased this Author: {removeAuthor.FirstName} {removeAuthor.LastName}.");
+                Console.ReadLine();
                 break;
             }
         }
@@ -215,6 +219,7 @@ public class Remove // Class to delete specific data in the Library (Delete  => 
                 if (!Loan.Any())
                 {
                     Console.WriteLine("There are no loans at the moment.");
+                    Console.ReadLine();
                     return;
                 }
 
@@ -224,6 +229,7 @@ public class Remove // Class to delete specific data in the Library (Delete  => 
                 {
                     Console.WriteLine($"Loan ID: {item.LoanID,10}, Borrower: {item.Borrower.FirstName} {item.Borrower.LastName,30}, " +
                                       $"Book: {item.Book.Title,20}, Loan Date: {item.LoanDate:yyyy-MM-dd, 15}, Returned: {item.IsReturned}");
+                    Console.ReadLine();
                 }
 
                 Console.WriteLine("Enter a Loan ID to remove (type 'LIST' to view all books or 'Q' to quit): ");
@@ -233,6 +239,7 @@ public class Remove // Class to delete specific data in the Library (Delete  => 
                 if (_input?.ToUpper() == "Q")
                 {
                     Console.WriteLine("Redirecting to Menu for Remove.");
+                    Console.ReadLine();
                     break;
                 }
 
@@ -240,6 +247,7 @@ public class Remove // Class to delete specific data in the Library (Delete  => 
                 if (!int.TryParse(_input, out var loanId))
                 {
                     Console.WriteLine("The ID could not be found, please try again!");
+                    Console.ReadLine();
                     continue;
                 }
 
@@ -251,6 +259,7 @@ public class Remove // Class to delete specific data in the Library (Delete  => 
                 if (_loan == null)
                 {
                     Console.WriteLine("The ID could not be found, please try again!");
+                    Console.ReadLine();
                     continue;
                 }
 
@@ -262,11 +271,14 @@ public class Remove // Class to delete specific data in the Library (Delete  => 
                     context.Lendings.Remove(_loan); // Removing the loan.
                     context.SaveChanges();          // SAving changes.   
                     Console.WriteLine($"You have now removed the loan! ID: {_loan.LoanID}");
+                    Console.ReadLine();
                     break;
                 }
                 else
                 {
-                    Console.WriteLine("Loan deletion canceled. Returning to the list.");
+                    Console.WriteLine("Loan deletion canceled.");
+                    Console.ReadLine();
+                    break;
                 }
             }
         }

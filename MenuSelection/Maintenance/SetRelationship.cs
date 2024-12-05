@@ -19,7 +19,7 @@ public class SetRelationship
                 if (!int.TryParse(Console.ReadLine(), out int bookID))
                 {
                     System.Console.WriteLine("The ID could not be found, please try again!");
-                    return;
+                    continue;
                 }
 
                 System.Console.WriteLine("2. Enter an Author ID: ");
@@ -27,7 +27,7 @@ public class SetRelationship
                 if (!int.TryParse(Console.ReadLine(), out int authorID))
                 {
                     System.Console.WriteLine("The ID could not be found, please try again!");
-                    return;
+                    continue;
                 }
 
                 //  creating a new instance for the new relationship between Book and Author.

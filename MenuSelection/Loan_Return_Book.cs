@@ -17,6 +17,7 @@ public class LoanBook   // Class to Loan a book and to add data for a Borrower.
                 var Books = context.Books
                     .Include(ba => ba.BookAuthors)
                     .ThenInclude(a => a.Author)
+                    .Include(b => b.IsAvailable)
                     .ToList();
 
                 if (!Books.Any())
@@ -31,7 +32,12 @@ public class LoanBook   // Class to Loan a book and to add data for a Borrower.
                 {
                     //  Here is the famous JOIN-part where authors and books will be shown from the above implementation.
                     var authors = string.Join(", ", _book.BookAuthors.Select(ba => $"{ba.Author.FirstName} {ba.Author.LastName}"));
-                    Console.WriteLine($"Book ID: {_book.BookID,-10} Title: {_book.Title,-40} Author: {authors}");
+                    // Looking for the last status concerning the loan for the book.
+                    var bookStatus = _book.Lendings.OrderByDescending(ld => ld.LoanDate).FirstOrDefault();
+                    var _status = bookStatus != null && bookStatus.IsReturned ? "Yes" : "No";
+                    
+                    Console.WriteLine($"Book ID: {_book.BookID,-10} Title: {_book.Title,-40} Author: {authors, -30} Is Available: {_status}");
+                    Console.ReadLine();
                 }
                 System.Console.WriteLine("______________________________________________________________\n");
 
@@ -128,7 +134,8 @@ public class LoanBook   // Class to Loan a book and to add data for a Borrower.
                     Console.ForegroundColor = ConsoleColor.Red;
                     Console.WriteLine("Book not found. Please check the Book ID and try again.");
                     Console.ResetColor();
-                    continue;
+                    Console.ReadLine();
+                    continue;   // User will be redirected to the List of Books
                 }
 
                 //  Error handling.
@@ -165,7 +172,7 @@ public class LoanBook   // Class to Loan a book and to add data for a Borrower.
                 System.Console.WriteLine($"\nPlease return the book by {DateTime.Now.AddDays(_period):yyyy-MM-dd}.");
                 Console.ResetColor();
                 Console.ReadLine();
-                return;
+                break;
             }
         }
     }
