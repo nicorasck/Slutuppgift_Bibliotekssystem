@@ -28,7 +28,7 @@ public class LoanBook   // Class to Loan a book and to add data for a Borrower.
             {
                 //  Here is the famous JOIN-part where authors and books will be shown from the above implementation.
                 var authors = string.Join(", ", _book.BookAuthors.Select(ba => $"{ba.Author.FirstName} {ba.Author.LastName}"));
-                Console.WriteLine($"Book: {_book.Title,-40} Author: {authors}");
+                Console.WriteLine($"Book ID: {_book.BookID, -10} Title: {_book.Title,-40} Author: {authors}");
             }
             System.Console.WriteLine("______________________________________________________________\n");
 

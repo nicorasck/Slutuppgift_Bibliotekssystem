@@ -12,3 +12,14 @@ dotnet ef database update
 --- git push ---
 git add .
 git commit -m "first commit" // " " => you can add a comment.
+
+
+---------- FIX -------------
+1. Book ID when loaning - book title (?) or show the books.
+2. Update - fix the error message.
+3. Shorten the menu => Add => Menu 
+4. Fix while-loops for all selections.
+5. Always show ID and 'name' for book and author.
+6. In all functions - adjust to BookName or AuthorName
+instead of ID's.
+7. Loan a book - show status.

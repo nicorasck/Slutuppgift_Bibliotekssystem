@@ -94,7 +94,7 @@ SELECT
     l.ReturnDate,        -- Date when a Book was returned or is going to be returned.
     l.IsReturned         -- Showing if a Book is on loan or not  => 'IsAvailable'
 FROM
-    Lendings l AS L
+    Lendings l
 JOIN
     Books AS b ON l.BookId = b.BookId   -- references 'Books'´in Lendings.
 LEFT JOIN

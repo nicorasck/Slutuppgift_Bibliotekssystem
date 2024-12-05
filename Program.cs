@@ -21,7 +21,7 @@ class Program
             menuSel = MenuSelection();
             MenuExecution(menuSel);
         }
-        while (menuSel != 10);
+        while (menuSel != 4);
     }
     private static int MenuSelection()
     {
@@ -29,25 +29,18 @@ class Program
         Console.ForegroundColor = ConsoleColor.DarkBlue;
         Console.WriteLine("Library system - 'Slutuppgift_Bibliotekssystem'\n");
         Console.ResetColor();
-        System.Console.WriteLine("1 - Add a Book.");
-        System.Console.WriteLine("2 - Add an Author.");
-        System.Console.WriteLine("3 - Loan a Book.");
-        System.Console.WriteLine("4 - Return a Book.");
-        System.Console.WriteLine("5 - View Library (including the Loan History).");
-        System.Console.WriteLine("6 - Update a Book Title.");
-        System.Console.WriteLine("7 - Update an Author.");
-        System.Console.WriteLine("8 - Add Book to an Author.");
-        Console.ForegroundColor = ConsoleColor.Red;
-        System.Console.WriteLine("9 - REMOVE (Book or Author).");
-        Console.ResetColor();
-        System.Console.WriteLine("10 - EXIT.");
+        System.Console.WriteLine("1 - Loan a Book.");
+        System.Console.WriteLine("2 - Return a Book.");
+        System.Console.WriteLine("3 - View Library (including the Loan History).");
+        System.Console.WriteLine("4 - Maintenance.");
+        System.Console.WriteLine("5 - EXIT.");
         try
         {
             menuSel = Convert.ToInt32(Console.ReadLine());
-            if (menuSel < 1 || menuSel > 10)
+            if (menuSel < 1 || menuSel > 4)
             {
                 Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine("Please select a valid option (1-10). Press any key for Menu.");
+                Console.WriteLine("Please select a valid option (1-4). Press any key for Menu.");
                 Console.ReadLine();
                 Console.ResetColor();
                 return MenuSelection();
@@ -56,7 +49,7 @@ class Program
         catch
         {
             Console.ForegroundColor = ConsoleColor.Red;
-            System.Console.WriteLine("Please select a valid option (1-10). Press any key for Menu.");
+            System.Console.WriteLine("Please select a valid option (1-4). Press any key for Menu.");
             Console.ResetColor();
             Console.ReadLine();
             return MenuSelection(); //moving back one step -> into the Menu
@@ -68,33 +61,18 @@ class Program
         switch (menuSel)
         {
             case 1:
-                AddBook.Run();
-                break;
-            case 2:
-                AddAuthor.Run();
-                break;
-            case 3:
                 LoanBook.Run();
                 break;
-            case 4:
+            case 2:
                 ReturnBook.Run();
                 break;
-            case 5:
+            case 3:
                 ViewLibrary.Run();
                 break;
-            case 6:
-                UpdateBook.Run();
+            case 4:
+                Maintenance.Run();
                 break;
-            case 7:
-                UpdateAuthor.Run();
-                break;
-            case 8:
-                SetRelationship.Run();
-                break;
-            case 9:
-                Remove.Run();
-                break;
-            case 10:
+            case 5:
                 System.Console.WriteLine("Thank you, see you another time!");
                 menuSel = 0;    // quitting menu, program will end.
                 return;
