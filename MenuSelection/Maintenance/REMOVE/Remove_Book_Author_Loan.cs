@@ -1,6 +1,7 @@
 using Slutuppgift_Bibliotekssystem;
 using System.Linq;
 using System;
+using Microsoft.EntityFrameworkCore;
 
 public class Remove // Class to delete specific data in the Library (Delete  => CRUD)
 {
@@ -21,12 +22,13 @@ public class Remove // Class to delete specific data in the Library (Delete  => 
                     Console.ReadLine();
                     return;
                 }
-                
+
                 else if (_input == "YES")
                 {
                     System.Console.WriteLine("\n1 - Remove a Book.");
                     System.Console.WriteLine("2 - Remove an Author.");
-                    System.Console.WriteLine("3 - Go back to the Main Menu.");
+                    System.Console.WriteLine("3 - Remove a Loan");
+                    System.Console.WriteLine("4 - Go back to the Main Menu.");
 
                     var _menuInput = Console.ReadLine();
                     switch (_menuInput)
@@ -38,26 +40,29 @@ public class Remove // Class to delete specific data in the Library (Delete  => 
                             RemoveAuthor();
                             break;
                         case "3":
+                            RemoveLoan();
+                            break;
+                        case "4":
                             System.Console.WriteLine("Redirecting to main menu. Press any key.");
                             Console.ReadLine();
                             return;
                         default:
                             //  Error handling
-                            System.Console.WriteLine("Please select a valid option (1-3). Press any key for Menu.");  
-                            Console.ReadLine();                      
+                            System.Console.WriteLine("Please select a valid option (1-3). Press any key for Menu.");
+                            Console.ReadLine();
                             break;  // The menu will run again.
                     }
                 }
                 else
                 {
                     System.Console.WriteLine("Invalid input, you have to enter YES or NO!");
-                    Console.ReadLine();       
+                    Console.ReadLine();
                 }
             }
         }
     }
 
-#region RemoveBook
+    #region RemoveBook
     private static void RemoveBook()
     {
         using (var context = new AppDbContext())
@@ -69,14 +74,14 @@ public class Remove // Class to delete specific data in the Library (Delete  => 
                 var _input = Console.ReadLine()?.Trim();
 
                 // If the user would like to see the books before removing.
-                if(_input?.ToUpper() == "LIST")
+                if (_input?.ToUpper() == "LIST")
                 {
                     Console.ForegroundColor = ConsoleColor.DarkBlue;
                     System.Console.WriteLine("List of Books:");
                     Console.ResetColor();
                     foreach (var _book in Books)
                     {
-                        System.Console.WriteLine($"Book ID: {_book.BookID, -10} Title: {_book.Title, -30} {_book.Genre}");
+                        System.Console.WriteLine($"Book ID: {_book.BookID,-10} Title: {_book.Title,-30} {_book.Genre}");
                     }
                     continue;
                 }
@@ -123,9 +128,9 @@ public class Remove // Class to delete specific data in the Library (Delete  => 
             }
         }
     }
-#endregion
+    #endregion
 
-#region RemoveAuthor
+    #region RemoveAuthor
     private static void RemoveAuthor()
     {
         using (var context = new AppDbContext())
@@ -143,7 +148,7 @@ public class Remove // Class to delete specific data in the Library (Delete  => 
                     Console.ResetColor();
                     foreach (var _author in Authors)
                     {
-                        System.Console.WriteLine($"Author ID: {_author.AuthorID, -10} Name: {_author.FirstName} {_author.LastName}");
+                        System.Console.WriteLine($"Author ID: {_author.AuthorID,-10} Name: {_author.FirstName} {_author.LastName}");
                     }
                     continue;
                 }
@@ -191,6 +196,81 @@ public class Remove // Class to delete specific data in the Library (Delete  => 
             }
         }
     }
-#endregion
+    #endregion
 
+    #region RemoveLoan
+
+    private static void RemoveLoan()
+    {
+        using (var context = new AppDbContext())
+        {
+            while (true)
+            {
+                // JOIN
+                var Loan = context.Lendings
+                    .Include(l => l.Borrower)   // Details from borrower.
+                    .Include(l => l.Book)   // Details from book.
+                    .ToList();
+
+                if (!Loan.Any())
+                {
+                    Console.WriteLine("There are no loans at the moment.");
+                    return;
+                }
+
+                // Listing the available loans
+                Console.WriteLine("Available Loans:");
+                foreach (var item in Loan)
+                {
+                    Console.WriteLine($"Loan ID: {item.LoanID,10}, Borrower: {item.Borrower.FirstName} {item.Borrower.LastName,30}, " +
+                                      $"Book: {item.Book.Title,20}, Loan Date: {item.LoanDate:yyyy-MM-dd, 15}, Returned: {item.IsReturned}");
+                }
+
+                Console.WriteLine("Enter a Loan ID to remove (type 'LIST' to view all books or 'Q' to quit): ");
+                var _input = Console.ReadLine()?.Trim();
+
+                // If the user would like to exit.
+                if (_input?.ToUpper() == "Q")
+                {
+                    Console.WriteLine("Redirecting to Menu for Remove.");
+                    break;
+                }
+
+                // Error handling if there is no Author with entered ID.
+                if (!int.TryParse(_input, out var loanId))
+                {
+                    Console.WriteLine("The ID could not be found, please try again!");
+                    continue;
+                }
+
+                var _loan = context.Lendings
+                    .Include(l => l.Borrower)   // Details from borrower.
+                    .Include(l => l.Book)       // Details from book.
+                    .FirstOrDefault(l => l.LoanID == loanId);
+
+                if (_loan == null)
+                {
+                    Console.WriteLine("The ID could not be found, please try again!");
+                    continue;
+                }
+
+                Console.WriteLine($"Are you sure you want to delete Loan ID: {_loan.LoanID,10} (Borrower: {_loan.Borrower.FirstName} {_loan.Borrower.LastName,30}, Book Title: {_loan.Book.Title})? (YES/NO)");
+                var _confirmation = Console.ReadLine()?.Trim();
+
+                if (_confirmation?.ToUpper() == "YES")
+                {
+                    context.Lendings.Remove(_loan); // Removing the loan.
+                    context.SaveChanges();          // SAving changes.   
+                    Console.WriteLine($"You have now removed the loan! ID: {_loan.LoanID}");
+                    break;
+                }
+                else
+                {
+                    Console.WriteLine("Loan deletion canceled. Returning to the list.");
+                }
+            }
+        }
+    }
+
+    #endregion
 }
