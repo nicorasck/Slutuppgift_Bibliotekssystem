@@ -34,6 +34,8 @@ public class ViewLibrary    // Class to read all data in the Library (Read  => C
             {
                 lh.Book.Title,  // Book Title.
                 lh.Borrower.BorrowerID, // Showing the ID for the borrower, in this case is not necessary to show name.
+                lh.Borrower.FirstName, // Showing the borrower first name.
+                lh.Borrower.LastName, // Showing the borrower last name.
                 lh.LoanDate,    // Date when a Book was borrowed.
                 lh.ReturnDate,  // Date when a Book was returned or is going to be returned.
                 lh.IsReturned   // Showing if a Book is on loan or not  => 'IsAvailable'.
@@ -56,6 +58,7 @@ public class ViewLibrary    // Class to read all data in the Library (Read  => C
                 {
                     // Adjust the width for each column as necessary
                     Console.WriteLine($"{"Title:", -20} {item.Title}");
+                    System.Console.WriteLine($"Borrower: {item.FirstName,-20} {item.LastName}");
                     Console.WriteLine($"{"Borrower ID:", -20} {item.BorrowerID}");
                     Console.WriteLine($"{"Loan Date:", -20} {item.LoanDate.ToShortDateString()}");
                     Console.WriteLine($"{"Return Date:", -20} {item.ReturnDate.ToShortDateString() ?? "Not Returned"}");
@@ -79,6 +82,8 @@ var loanHistory = context.Lendings
 {
     lh.Book.Title,  // Book Title.
     lh.Borrower.BorrowerID, // Showing the ID for the borrower, in this case is not necessary to show name.
+    lh.Borrower.FirstName,  // Showing the borrower first name.
+    lh.Borrower.LastName,   // Showing the borrower last name.
     lh.LoanDate,    // Date when a Book was borrowed.
     lh.ReturnDate,  // Date when a Book was returned or is going to be returned.
     lh.IsReturned   // Showing if a Book is on loan or not  => 'IsAvailable'.
@@ -89,17 +94,23 @@ var loanHistory = context.Lendings
 
 
 SELECT
-    b.Title,             -- Book Title
-    l.BorrowerID,        -- Showing the ID for the borrower, in this case is not necessary to show name.
-    l.LoanDate,          -- Date when a Book was borrowed.
-    l.ReturnDate,        -- Date when a Book was returned or is going to be returned.
-    l.IsReturned         -- Showing if a Book is on loan or not  => 'IsAvailable'
+    b.Title,                -- Book Title
+    bo.BorrowerID,          -- Showing the ID for the borrower, in this case is not necessary to show name.
+    bo.BorrowerFirstName,   -- Showing the borrower first name.
+    bo.BorrowerLastName,    -- Showing the borrower last name.
+    l.LoanDate,             -- Date when a Book was borrowed.
+    l.ReturnDate,           -- Date when a Book was returned or is going to be returned.
+    l.IsReturned            -- Showing if a Book is on loan or not  => 'IsAvailable'
 FROM
     Lendings l
-JOIN
-    Books AS b ON l.BookId = b.BookId   -- references 'Books'´in Lendings.
+INNER JOIN
+    Books b ON l.BookId = b.BookID              -- Showing Lendings table with Books table.
 LEFT JOIN
-    BookAuthors AS ba ON b.BookId = ba.BookId  -- to show any details for the book even if there are no matched Authors.
+    BookAuthors ba ON b.BookID = ba.BookID      -- Showing Books table with BookAuthors table.
+LEFT JOIN
+    Authors a ON ba.AuthorID = a.AuthorID       -- Showing BookAuthors table with Authors table.
+INNER JOIN
+    Borrowers bo ON l.BorrowerID = bo.BorrowerID -- Showing Lendings table with Borrowers table
 
 */
 #endregion
