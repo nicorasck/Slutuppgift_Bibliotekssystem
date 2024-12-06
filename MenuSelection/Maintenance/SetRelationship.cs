@@ -10,9 +10,11 @@ public class SetRelationship
             while(true)
             {
                 //  Instructions for the user.
-                Console.ForegroundColor = ConsoleColor.DarkBlue;
-                System.Console.WriteLine("To establish a relationship between a Book and an Author you need to enter the specific ID's for each one.\n");
+                Console.ForegroundColor = ConsoleColor.Yellow;
+                System.Console.WriteLine("\nTo establish a relationship between a Book and an Author you need to enter the specific ID's for each one.");
                 Console.ResetColor();
+                ListLibrary.Run();  // bringing the Library to show the user which ID each books and Authors have.
+                System.Console.WriteLine();
 
                 System.Console.WriteLine("1. Enter a Book ID: ");
                 //  Error handling
@@ -35,7 +37,7 @@ public class SetRelationship
 
                 context.BookAuthors.Add(bookAuthor);    // Adding the new relationship between Book and Author.
                 context.SaveChanges();  // Saving the new relationship the user have chosen.
-                System.Console.WriteLine($"A new instance for BookAuthor is now created!\nA relationship between Book ID: {bookID} and Author ID: {authorID}.");
+                System.Console.WriteLine($"\nA new instance for BookAuthor is now created!\nA new relationship between Book ID: {bookID} and Author ID: {authorID}.");
                 Console.ReadLine();
                 return;
             }

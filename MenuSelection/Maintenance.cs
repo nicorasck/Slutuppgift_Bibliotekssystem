@@ -28,7 +28,7 @@ public class Maintenance
             Console.ForegroundColor = ConsoleColor.Red;
             System.Console.WriteLine("6 - REMOVE (Book or Author).");
             Console.ResetColor();
-            System.Console.WriteLine("7 - EXIT.");
+            System.Console.WriteLine("7 - Main Menu.");
             try
             {
                 menuSel = Convert.ToInt32(Console.ReadLine());

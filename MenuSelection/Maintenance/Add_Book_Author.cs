@@ -1,6 +1,7 @@
 using System;
 using Slutuppgift_Bibliotekssystem;
 using Microsoft.EntityFrameworkCore.Storage.Json;
+using System.Runtime.ConstrainedExecution;
 
 #region AddBook
 public class AddBook    // Class for adding a Book (Create => CRUD)
@@ -33,7 +34,7 @@ public class AddBook    // Class for adding a Book (Create => CRUD)
                     continue;
                 }
 
-                System.Console.WriteLine("This book is now available for loan!");
+                System.Console.WriteLine("\nThis book is now available for loan!");
                 bool _isAvailable = true;   // bc adding a new book to the library the book will be available for Loan.
 
                 var _book = new Book    // creating a new book object
@@ -48,6 +49,7 @@ public class AddBook    // Class for adding a Book (Create => CRUD)
                 context.SaveChanges();  // Saving the book into the Database.
                                         //  To let the user know that the book has been added.
                 System.Console.WriteLine($"Congratulations! {_title} has been added to the library!");
+                System.Console.WriteLine("(Press any key for Menu)");
                 Console.ReadLine();
                 return;
             }
@@ -80,7 +82,10 @@ public class AddAuthor  // Class for adding an Author (Create => CRUD)
                 // Error handling if the user is entering in wrong format!
                 if (!int.TryParse(_birthYear, out int birthYear))
                 {
-                    System.Console.WriteLine("The format for Birth Year might be incorrect. Please enter: yyyy, thank you in advance!");
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    System.Console.WriteLine("\nThe format for Birth Year might be incorrect. Please enter: yyyy, thank you in advance!");
+                    Console.ResetColor();
+                    Console.ReadLine();
                     continue;
                 }
 
@@ -93,7 +98,8 @@ public class AddAuthor  // Class for adding an Author (Create => CRUD)
                 context.Authors.Add(_author);   // Adding the new book into DataBase Context.
                 context.SaveChanges();  // Saving the book into the Database.
                 //  To let the user know that the Author has been added.
-                System.Console.WriteLine($"Congratulations! Author {_firstName} {_lastName}, born in {birthYear}, has been added to the library!");
+                System.Console.WriteLine($"\nCongratulations! Author {_firstName} {_lastName}, born in {birthYear}, has been added to the library!");
+                System.Console.WriteLine("(Press any Key for Menu)");
                 Console.ReadLine();
                 return;
             }

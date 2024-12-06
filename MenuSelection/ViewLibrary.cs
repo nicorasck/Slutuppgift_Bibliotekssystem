@@ -10,10 +10,20 @@ public class ViewLibrary    // Class to read all data in the Library (Read  => C
     {
         using (var context = new AppDbContext())
         {
-            // JOIN
+#region Library            
+            // Variable - Books and Authors which are set in a relationship.
             var BookAuthor = context.Books
                 .Include(ba => ba.BookAuthors)  // From this one you get for an example the Author ID.
                 .ThenInclude(a => a.Author)
+                .ToList();
+            
+            // Variable - Authors without any connected Books.
+            var AuthorsWithoutBooks = context.Authors
+                .Where(a => !a.BookAuthors.Any())
+                .ToList();
+            // Variable - Books without any connected Authors.
+            var BooksWithoutAuthors = context.Books
+                .Where(b => !b.BookAuthors.Any())
                 .ToList();
 
             Console.ForegroundColor = ConsoleColor.DarkBlue;
@@ -28,11 +38,33 @@ public class ViewLibrary    // Class to read all data in the Library (Read  => C
                     Console.WriteLine($"ID: {_author.AuthorID, -3} - Author: {authors,-30} Book ID: {_book.BookID,-3} - Title: {_book.Title,-30} Genre: {_book.Genre,-15} Publisher: {_book.Publisher}");
                 }
             }
+
+            // Listing the Authors without Books.
+            Console.ForegroundColor = ConsoleColor.DarkBlue;
+            System.Console.WriteLine("\nLibrary - Authors Without Books:\n");
+            Console.ResetColor();
+            foreach (var author in AuthorsWithoutBooks)
+            {
+                Console.WriteLine($"ID: {author.AuthorID,-3} - Author: {author.FirstName} {author.LastName}");
+            }
+
+            // Listing the Books without Authors.
+            Console.ForegroundColor = ConsoleColor.DarkBlue;
+            System.Console.WriteLine("\nLibrary - Books Without Authors:\n");
+            Console.ResetColor();
+            foreach (var book in BooksWithoutAuthors)
+            {
+                Console.WriteLine($"ID: {book.BookID,-3} - Title: {book.Title,-30} Genre: {book.Genre,-15} Publisher: {book.Publisher}");
+            }
+
             // Listing the total number of books in the Library.
             var _NoOfBooks = BookAuthor.Count;
             Console.ForegroundColor = ConsoleColor.DarkGreen;
             System.Console.WriteLine($"\nTotal Number of Books: {_NoOfBooks}\n");
             Console.ResetColor();
+#endregion
+
+#region LoanHistory
 
             var loanHistory = context.Lendings
                 .Include(l => l.Book)   // Entity of the Book will be included, otherwise you cannot track the history for sure.
@@ -75,6 +107,7 @@ public class ViewLibrary    // Class to read all data in the Library (Read  => C
                 System.Console.WriteLine("\n(Press any key for Menu)");
             }
             Console.ReadLine();
+#endregion
         }
     }
 }
