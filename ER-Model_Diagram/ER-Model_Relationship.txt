@@ -46,7 +46,7 @@ Book and Author:
                             book can have several of authors.
 
 Book and Lending:
-    One-to-Many         --  Lending can be or several of books.
+    One-to-Many         --  Lending can be one or several of books.
                             (you can borrow a maximum of 2 of books in this program)
 
 Borrower and Lending:

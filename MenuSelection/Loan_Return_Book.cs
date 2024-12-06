@@ -152,7 +152,7 @@ public class LoanBook   // Class to Loan a book and to add data for a Borrower.
                 if (loanBook == null)
                 {
                     Console.ForegroundColor = ConsoleColor.Red;
-                    Console.WriteLine("Book not found. Please check the Book ID and try again.");
+                    Console.WriteLine("Book was not found. Please check the Book ID and try again.");
                     Console.ResetColor();
                     Console.ReadLine();
                     continue;   // User will be redirected to the List of Books
@@ -164,7 +164,8 @@ public class LoanBook   // Class to Loan a book and to add data for a Borrower.
                     Console.ForegroundColor = ConsoleColor.Red;
                     Console.WriteLine("The selected book is currently unavailable.");
                     Console.ResetColor();
-                    continue;
+                    Console.ReadLine();
+                    break;
                 }
 
                 // Creating a new instance in Lending.
@@ -208,20 +209,15 @@ public class ReturnBook
         {
             while (true)
             {
-                System.Console.WriteLine("Please enter the First Name of the borrower: ");
-                var _boFirstName = Console.ReadLine();
-                System.Console.WriteLine("Please enter the Last Name of the borrower: ");
-                var _boLastName = Console.ReadLine();
+                var Books = context.Books
+                    .Include(b => b.BookAuthors)
+                    .ThenInclude(b => b.Author)
+                    .ToList();
 
-                System.Console.WriteLine($"Hello {_boFirstName} {_boLastName}, please enter the Book ID: ");
-                if (!int.TryParse(Console.ReadLine(), out var bookID))
-                {
-                    Console.ForegroundColor = ConsoleColor.Red;
-                    System.Console.WriteLine("The ID could not be found, please try again!");
-                    Console.ResetColor();
-                    Console.ReadLine();
-                    continue;
-                }
+                System.Console.WriteLine("\nPlease enter the First Name of the borrower: ");
+                var _boFirstName = Console.ReadLine().Trim();
+                System.Console.WriteLine("Please enter the Last Name of the borrower: ");
+                var _boLastName = Console.ReadLine().Trim();
 
                 // Checking if the given name combination does exists in the entity for Borrower.
                 var _borrower = context.Borrowers
@@ -235,6 +231,44 @@ public class ReturnBook
                     Console.ReadLine();
                     continue;
                 }
+
+                // Showing loaned books by borrower at the moment.
+                var currentLoan = context.Lendings
+                    .Where(l => l.BorrowerID == _borrower.BorrowerID && !l.IsReturned)
+                    .Include(l => l.Book)
+                    .ToList();
+
+                if (!currentLoan.Any())
+                {
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    System.Console.WriteLine("\nThere are no loans in your name!");
+                    Console.ResetColor();
+                    Console.ReadLine();
+                    continue;
+                }
+
+                // Presenting the borrowers name and the books he can return.
+                System.Console.WriteLine($"\nHello {_boFirstName} {_boLastName}");
+                Console.ForegroundColor = ConsoleColor.DarkBlue;
+                System.Console.WriteLine("The books you've loaned:");
+                Console.ResetColor();
+
+                foreach (var book in currentLoan)
+                {
+                    System.Console.WriteLine($"Book ID: {book.BookID, -3} - Title: {book.Book.Title, -30} Loan Date: {book.LoanDate.ToShortDateString()}");
+                }
+                System.Console.WriteLine("\nPlease enter the Book ID: ");
+                
+                // Error handling if the user enter an incorrect ID.
+                if (!int.TryParse(Console.ReadLine(), out var bookID))
+                {
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    System.Console.WriteLine("The ID could not be found, please try again!");
+                    Console.ResetColor();
+                    Console.ReadLine();
+                    continue;
+                }
+
 #region OverDue
                 // A code for an overdue would suit here (?)
 #endregion
@@ -248,7 +282,7 @@ public class ReturnBook
                     System.Console.WriteLine($"Cannot find any ongoing loan for {_boFirstName} {_boLastName} with this book!");
                     Console.ResetColor();
                     Console.ReadLine();
-                    return;
+                    continue;
                 }
 
                 _loan.IsReturned = true; // If match, the book will be marked as returned.
@@ -260,9 +294,9 @@ public class ReturnBook
                     _book.IsAvailable = true;
                 }
                 context.SaveChanges();  // Saving the new changes/status.
-                System.Console.WriteLine($"Thank you {_boFirstName} {_boLastName}, the Book is now returned (ID: {bookID}).");
+                System.Console.WriteLine($"\nThank you {_boFirstName} {_boLastName}, the Book is now returned (ID: {bookID}).");
                 Console.ForegroundColor = ConsoleColor.Gray;
-                System.Console.WriteLine("(Press any key for Menu)");
+                System.Console.WriteLine("(Press any key for Main Menu)");
                 Console.ResetColor();
                 Console.ReadLine();
                 return;

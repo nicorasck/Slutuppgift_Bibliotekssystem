@@ -24,3 +24,4 @@ git commit -m "first commit" // " " => you can add a comment.
 instead of ID's.
 7. Loan a book - show status.
 8. List all the books a borrower have atm.
+9. Add a new book (Harper Lee) - then check if there is "One-to-Many"!!!!
