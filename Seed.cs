@@ -114,7 +114,7 @@ public class Seed
 
                                         context.SaveChanges();
 
-                                        //  This is necessary to establish the relationships!
+                                        //  This is necessary to establish the relationships! Using an Array this time.
                                         var bookAuthors = new[]
                                         {
                                                 new BookAuthor {Book = book1, Author = author1},
@@ -127,6 +127,29 @@ public class Seed
                                         context.BookAuthors.AddRange(bookAuthors);  // Relationships in this context will be added.
                                         context.SaveChanges();  // Need to save the added relationships in the context.
                                         transaction.Commit();
+
+                                        //  Creating a new instance for a Borrower (required properties).
+                                        var _borrower = new Borrower
+                                        {
+                                                FirstName = "Joar",
+                                                LastName = "Monell",
+                                                Email = "Jojje@boy.com",
+                                                PhoneNumber = "0734457354"
+                                        };
+                                        context.Borrowers.AddRange(_borrower);   // Adding the borrower.
+                                        context.SaveChanges();
+
+                                        var _loan = new Lending
+                                        {
+                                        BookID = 1,
+                                        BorrowerID = 10, // Reference BorrowerID
+                                        LoanDate = DateTime.Now,
+                                        ReturnDate = DateTime.Now.AddDays(10),
+                                        IsReturned = false
+                                        };
+                                        context.Lendings.AddRange(_loan); // Adding the loaner.
+                                        context.SaveChanges();
+                                
                                         System.Console.WriteLine("Saved changes");
                                 }
                                 else
