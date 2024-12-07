@@ -27,7 +27,7 @@ public class Maintenance
             System.Console.WriteLine("4 - Update a Book Title.");
             System.Console.WriteLine("5 - Add Book to an Author.");
             Console.ForegroundColor = ConsoleColor.Red;
-            System.Console.WriteLine("6 - REMOVE (Book or Author).");
+            System.Console.WriteLine("6 - REMOVE (Book / Author / Loan).");
             Console.ResetColor();
             System.Console.WriteLine("7 - Main Menu.");
             try

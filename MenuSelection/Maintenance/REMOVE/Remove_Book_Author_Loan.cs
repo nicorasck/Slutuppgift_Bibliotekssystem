@@ -12,7 +12,7 @@ public class Remove // Class to delete specific data in the Library (Delete  => 
         {
             while (true)
             {
-                System.Console.WriteLine("REMOVE (Book, Author or Loan).");
+                System.Console.WriteLine("REMOVE (Book / Author / Loan).");
                 Console.ForegroundColor = ConsoleColor.Red;
                 System.Console.WriteLine("YES/NO?");
                 Console.ResetColor();

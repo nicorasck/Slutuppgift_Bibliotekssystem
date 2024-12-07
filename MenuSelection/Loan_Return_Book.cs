@@ -214,12 +214,21 @@ public class ReturnBook
         {
             while (true)
             {
+                System.Console.WriteLine("\nIf you don't want to return a book, please Enter 'NO' otherwise press Enter.");
+                var _input = Console.ReadLine()?.Trim();
+
+                if (_input?.ToUpper() == "NO")
+                {
+                    System.Console.WriteLine("Redirecting to Menu for Maintenance.\n");
+                    break;
+                }
+
                 var Books = context.Books
                     .Include(b => b.BookAuthors)
                     .ThenInclude(b => b.Author)
                     .ToList();
 
-                System.Console.Write("\nPlease enter the First Name of the borrower: ");
+                System.Console.Write("Please enter the First Name of the borrower: ");
                 var _boFirstName = Console.ReadLine().Trim();
                 System.Console.Write("Please enter the Last Name of the borrower: ");
                 var _boLastName = Console.ReadLine().Trim();
@@ -297,7 +306,7 @@ public class ReturnBook
                 context.SaveChanges();  // Saving the new changes/status.
                 System.Console.WriteLine($"\nThank you {_boFirstName} {_boLastName}, the Book is now returned (ID: {bookID}).");
                 Console.ForegroundColor = ConsoleColor.Gray;
-                System.Console.WriteLine("(Press any key for Main Menu)");
+                System.Console.WriteLine("(Press Enter for Main Menu)");
                 Console.ResetColor();
                 Console.ReadLine();
                 return;
