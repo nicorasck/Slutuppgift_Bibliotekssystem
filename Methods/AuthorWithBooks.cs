@@ -54,7 +54,7 @@ public class AuthorWithBooks    // Listing all books for a specific Author.
 
                     foreach (var book in Books)
                     {
-                        Console.WriteLine($"- {book.Title, -20} Genre: {book.Genre, -15} Release date: {book.ReleaseDate, -20} Publisher: {book.Publisher}");
+                        Console.WriteLine($"Book Title: {book.Title, -20} Genre: {book.Genre, -15} Release date: {book.ReleaseDate, -20} Publisher: {book.Publisher}");
                     }
                 }
                 break;
