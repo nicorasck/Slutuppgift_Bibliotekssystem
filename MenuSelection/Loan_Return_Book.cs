@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Identity.Client;
 
+namespace MenuSelection;
 #region LoanBook
 public class LoanBook   // Class to Loan a book and to add data for a Borrower.
 {
@@ -220,7 +221,7 @@ public class ReturnBook
 
                 System.Console.Write("\nPlease enter the First Name of the borrower: ");
                 var _boFirstName = Console.ReadLine().Trim();
-                System.Console.Write("\nPlease enter the Last Name of the borrower: ");
+                System.Console.Write("Please enter the Last Name of the borrower: ");
                 var _boLastName = Console.ReadLine().Trim();
 
                 // Checking if the given name combination does exists in the entity for Borrower.
@@ -230,9 +231,8 @@ public class ReturnBook
                 if (_borrower == null)
                 {
                     Console.ForegroundColor = ConsoleColor.Red;
-                    System.Console.WriteLine("\nThe name of the borrower cannot be found in the Data Base!");
+                    System.Console.WriteLine("The name of the borrower cannot be found in the Data Base!\n");
                     Console.ResetColor();
-                    Console.ReadLine();
                     continue;
                 }
 
@@ -245,9 +245,8 @@ public class ReturnBook
                 if (!currentLoan.Any())
                 {
                     Console.ForegroundColor = ConsoleColor.Red;
-                    System.Console.WriteLine("\nThere are no loans in your name!");
+                    System.Console.WriteLine("There are no loans in your name!\n");
                     Console.ResetColor();
-                    Console.ReadLine();
                     continue;
                 }
 
@@ -267,9 +266,8 @@ public class ReturnBook
                 if (!int.TryParse(Console.ReadLine(), out var bookID))
                 {
                     Console.ForegroundColor = ConsoleColor.Red;
-                    System.Console.WriteLine("\nThe ID could not be found, please try again!");
+                    System.Console.WriteLine("The ID could not be found, please try again!\n");
                     Console.ResetColor();
-                    Console.ReadLine();
                     continue;
                 }
 
@@ -283,9 +281,8 @@ public class ReturnBook
                 if (_loan == null)
                 {
                     Console.ForegroundColor = ConsoleColor.Red;
-                    System.Console.WriteLine($"\nCannot find any ongoing loan for {_boFirstName} {_boLastName} with this book!");
+                    System.Console.WriteLine($"Cannot find any ongoing loan for {_boFirstName} {_boLastName} with this book!\n");
                     Console.ResetColor();
-                    Console.ReadLine();
                     continue;
                 }
 

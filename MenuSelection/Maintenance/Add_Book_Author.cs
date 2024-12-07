@@ -3,6 +3,7 @@ using Slutuppgift_Bibliotekssystem;
 using Microsoft.EntityFrameworkCore.Storage.Json;
 using System.Runtime.ConstrainedExecution;
 
+namespace MenuSelection;
 #region AddBook
 public class AddBook    // Class for adding a Book (Create => CRUD)
 {
@@ -47,9 +48,11 @@ public class AddBook    // Class for adding a Book (Create => CRUD)
                 };
                 context.Books.Add(_book);   // Adding the new book into DataBase Context.
                 context.SaveChanges();  // Saving the book into the Database.
-                                        //  To let the user know that the book has been added.
+                //  To let the user know that the book has been added.
+                Console.ForegroundColor = ConsoleColor.DarkYellow;
                 System.Console.WriteLine($"\nCongratulations! {_title} has been added to the library!");
-                System.Console.WriteLine("(Press any key for Menu)\n");
+                Console.ResetColor();
+                System.Console.WriteLine("(Press Enter for Menu)\n");
                 Console.ReadLine();
                 return;
             }
@@ -98,8 +101,10 @@ public class AddAuthor  // Class for adding an Author (Create => CRUD)
                 context.Authors.Add(_author);   // Adding the new book into DataBase Context.
                 context.SaveChanges();  // Saving the book into the Database.
                 //  To let the user know that the Author has been added.
+                Console.ForegroundColor = ConsoleColor.DarkYellow;
                 System.Console.WriteLine($"\nCongratulations! Author {_firstName} {_lastName}, born in {birthYear}, has been added to the library!");
-                System.Console.WriteLine("(Press any Key for Menu)\n");
+                Console.ResetColor();
+                System.Console.WriteLine("(Press Enter for Menu)\n");
                 Console.ReadLine();
                 return;
             }

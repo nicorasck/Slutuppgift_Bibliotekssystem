@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Slutuppgift_Bibliotekssystem;
-
+using MenuSelection;
 
 class Program
 {
@@ -27,7 +27,7 @@ class Program
     {
         int menuSel = 0;
         Console.ForegroundColor = ConsoleColor.DarkBlue;
-        Console.WriteLine("Library system - 'Slutuppgift_Bibliotekssystem'\n");
+        Console.WriteLine("Library system - 'Slutuppgift_Bibliotekssystem'");
         Console.ResetColor();
         System.Console.WriteLine("1 - Loan a Book.");
         System.Console.WriteLine("2 - Return a Book.");

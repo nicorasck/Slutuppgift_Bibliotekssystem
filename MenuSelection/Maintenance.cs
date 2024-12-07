@@ -2,12 +2,13 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Slutuppgift_Bibliotekssystem;
 
+namespace MenuSelection;
 public class Maintenance
 {
     public static void Run()
     {
         Console.ForegroundColor = ConsoleColor.DarkBlue;
-        Console.WriteLine("\nMaintenance\n");
+        Console.WriteLine("\nMaintenance");
         Console.ResetColor();
         int menuSel = 0;
         do
@@ -80,9 +81,8 @@ public class Maintenance
                 default:
                     // Error handling
                     Console.ForegroundColor = ConsoleColor.Red;
-                    System.Console.WriteLine("Eeeey yo, Invalid input! Please try again :)");
+                    System.Console.WriteLine("Eeeey yo, Invalid input! Please try again :)\n");
                     Console.ResetColor();
-                    Console.ReadLine();
                     break;
             }
         }

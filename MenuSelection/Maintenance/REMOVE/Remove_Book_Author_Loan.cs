@@ -3,6 +3,7 @@ using System.Linq;
 using System;
 using Microsoft.EntityFrameworkCore;
 
+namespace MenuSelection;
 public class Remove // Class to delete specific data in the Library (Delete  => CRUD)
 {
     public static void Run()
@@ -11,7 +12,7 @@ public class Remove // Class to delete specific data in the Library (Delete  => 
         {
             while (true)
             {
-                System.Console.WriteLine("REMOVE (Book or Author).");
+                System.Console.WriteLine("REMOVE (Book, Author or Loan).");
                 Console.ForegroundColor = ConsoleColor.Red;
                 System.Console.WriteLine("YES/NO?");
                 Console.ResetColor();
@@ -45,7 +46,7 @@ public class Remove // Class to delete specific data in the Library (Delete  => 
                             RemoveLoan();
                             break;
                         case "4":
-                            System.Console.WriteLine("\nRedirecting to main menu.");
+                            System.Console.WriteLine("\nRedirecting to Menu for Maintenance.");
                             return;
                         default:
                             //  Error handling
@@ -241,7 +242,6 @@ public class Remove // Class to delete specific data in the Library (Delete  => 
                 {
                     Console.WriteLine($"Loan ID: {item.LoanID,10}, Borrower: {item.Borrower.FirstName} {item.Borrower.LastName,30}, " +
                                       $"Book: {item.Book.Title,20}, Loan Date: {item.LoanDate:yyyy-MM-dd, 15}, Returned: {item.IsReturned}");
-                    Console.ReadLine();
                 }
 
                 Console.WriteLine("Enter a Loan ID to remove (type 'LIST' to view all books or 'Q' to quit): ");
