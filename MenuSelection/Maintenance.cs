@@ -74,7 +74,7 @@ public class Maintenance
                     Remove.Run();
                     break;
                 case 7:
-                    System.Console.WriteLine("You will be redirected to the Main Menu!");
+                    System.Console.WriteLine("\nYou will be redirected to the Main Menu!");
                     menuSel = 0;
                     return;
                 default:

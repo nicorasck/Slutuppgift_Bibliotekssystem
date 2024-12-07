@@ -16,19 +16,23 @@ public class SetRelationship
                 ListLibrary.Run();  // bringing the Library to show the user which ID each books and Authors have.
                 System.Console.WriteLine();
 
-                System.Console.WriteLine("1. Enter a Book ID: ");
+                System.Console.Write("1. Enter a Book ID: ");
                 //  Error handling
                 if (!int.TryParse(Console.ReadLine(), out int bookID))
                 {
-                    System.Console.WriteLine("The ID could not be found, please try again!");
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    System.Console.WriteLine("\nThe ID could not be found, please try again!");
+                    Console.ResetColor();
                     continue;
                 }
 
-                System.Console.WriteLine("2. Enter an Author ID: ");
+                System.Console.Write("\n2. Enter an Author ID: ");
                 //  Error handling
                 if (!int.TryParse(Console.ReadLine(), out int authorID))
                 {
-                    System.Console.WriteLine("The ID could not be found, please try again!");
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    System.Console.WriteLine("\nThe ID could not be found, please try again!");
+                    Console.ResetColor();
                     continue;
                 }
 

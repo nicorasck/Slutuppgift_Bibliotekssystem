@@ -18,19 +18,19 @@ public class AddBook    // Class for adding a Book (Create => CRUD)
                 System.Console.WriteLine("\nAdd a new Book to the Library.\n");
                 Console.ResetColor();
 
-                System.Console.WriteLine("Enter a Title: ");
+                System.Console.Write("Enter a Title: ");
                 var _title = Console.ReadLine()?.Trim();
-                System.Console.WriteLine("Enter a Genre: ");
+                System.Console.Write("\nEnter a Genre: ");
                 var _genre = Console.ReadLine()?.Trim();
-                System.Console.WriteLine("Enter a Publisher: ");
+                System.Console.Write("\nEnter a Publisher: ");
                 var _publisher = Console.ReadLine()?.Trim();
 
-                System.Console.WriteLine("Enter a Release Date (yyyy-MM-dd): ");
+                System.Console.Write("\nEnter a Release Date (yyyy-MM-dd): ");
                 var _releaseDate = Console.ReadLine();
                 // Error handling if the user is entering in wrong format!
                 if (!DateOnly.TryParse(_releaseDate, out DateOnly releaseDate))
                 {
-                    System.Console.WriteLine("The Date format might be incorrect. Please enter: yyyy-MM-dd, thank you in advance!");
+                    System.Console.WriteLine("\nThe Date format might be incorrect. Please enter: yyyy-MM-dd, thank you in advance!");
                     continue;
                 }
 
@@ -48,8 +48,8 @@ public class AddBook    // Class for adding a Book (Create => CRUD)
                 context.Books.Add(_book);   // Adding the new book into DataBase Context.
                 context.SaveChanges();  // Saving the book into the Database.
                                         //  To let the user know that the book has been added.
-                System.Console.WriteLine($"Congratulations! {_title} has been added to the library!");
-                System.Console.WriteLine("(Press any key for Menu)");
+                System.Console.WriteLine($"\nCongratulations! {_title} has been added to the library!");
+                System.Console.WriteLine("(Press any key for Menu)\n");
                 Console.ReadLine();
                 return;
             }
@@ -71,13 +71,13 @@ public class AddAuthor  // Class for adding an Author (Create => CRUD)
                 System.Console.WriteLine("\nAdd a new Author to the Library.\n");
                 Console.ResetColor();
 
-                System.Console.WriteLine("Enter a First Name: ");
+                System.Console.Write("Enter a First Name: ");
                 var _firstName = Console.ReadLine()?.Trim();
-                System.Console.WriteLine("Enter a Last Name: ");
+                System.Console.Write("\nEnter a Last Name: ");
                 var _lastName = Console.ReadLine()?.Trim();
 
                 // Using the same structure as above in AddBook for DateOnly but this is for integers instead.
-                System.Console.WriteLine("Enter a Birth Year (yyyy): ");
+                System.Console.Write("\nEnter a Birth Year (yyyy): ");
                 var _birthYear = Console.ReadLine()?.Trim();
                 // Error handling if the user is entering in wrong format!
                 if (!int.TryParse(_birthYear, out int birthYear))
@@ -99,7 +99,7 @@ public class AddAuthor  // Class for adding an Author (Create => CRUD)
                 context.SaveChanges();  // Saving the book into the Database.
                 //  To let the user know that the Author has been added.
                 System.Console.WriteLine($"\nCongratulations! Author {_firstName} {_lastName}, born in {birthYear}, has been added to the library!");
-                System.Console.WriteLine("(Press any Key for Menu)");
+                System.Console.WriteLine("(Press any Key for Menu)\n");
                 Console.ReadLine();
                 return;
             }

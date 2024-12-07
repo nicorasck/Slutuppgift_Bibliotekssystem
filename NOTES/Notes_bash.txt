@@ -14,7 +14,9 @@ git add .
 git commit -m "first commit" // " " => you can add a comment.
 
 
----------- FIX -------------
+--------------- FIX -------------
+(logic errors)
+
 1. Book ID when loaning - book title (?) or show the books.
 2. Update - fix the error message.
 3. Shorten the menu => Add => Menu 
@@ -26,3 +28,17 @@ instead of ID's.
 8. List all the books a borrower have atm.
 9. Add a new book (Harper Lee) - then check if there is "One-to-Many"!!!!
 10. After each "Question, change WriteLine to Write (it looks nicer bruh)!!!!
+11. Check ALL Updates!!!
+12. Format Loan History and Library format as well.
+13. Fix Remove book.
+14. Fix '(Press any Key for Menu)' => '(Press Enter for Menu)'
+15. Erase some Console.ReadLine();
+16. Erase '\n' in some Console.Write(); and Console.WriteLine();
+17. Add option to Quit in each method!
+18. Error handling => Can't have the same book name or a author name, no copies!
+
+
+-------------- FUN FACT --------------
+Mr Harper Lee, the Author only do have TWO written books according to Internet!
+"While Lee’s body of work is limited to two novels, these additional books
+could be useful for anyone studying her life or influence."

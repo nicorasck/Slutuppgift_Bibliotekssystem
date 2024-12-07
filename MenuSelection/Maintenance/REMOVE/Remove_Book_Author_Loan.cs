@@ -15,10 +15,12 @@ public class Remove // Class to delete specific data in the Library (Delete  => 
                 Console.ForegroundColor = ConsoleColor.Red;
                 System.Console.WriteLine("YES/NO?");
                 Console.ResetColor();
-                var _input = Console.ReadLine().ToUpper();
+                var _input = Console.ReadLine().ToUpper().Trim();
                 if (_input == "NO")
                 {
-                    System.Console.WriteLine("OK, good choice! You will be redirected to the Menu (press any key)");
+                    Console.ForegroundColor = ConsoleColor.DarkGreen;
+                    System.Console.WriteLine("OK, good choice! You will be redirected to the Menu (press enter for Main Menu)");
+                    Console.ResetColor();
                     Console.ReadLine();
                     return;
                 }
@@ -43,20 +45,21 @@ public class Remove // Class to delete specific data in the Library (Delete  => 
                             RemoveLoan();
                             break;
                         case "4":
-                            System.Console.WriteLine("Redirecting to main menu. Press any key.");
-                            Console.ReadLine();
+                            System.Console.WriteLine("\nRedirecting to main menu.");
                             return;
                         default:
                             //  Error handling
-                            System.Console.WriteLine("Please select a valid option (1-3). Press any key for Menu.");
-                            Console.ReadLine();
+                            Console.ForegroundColor = ConsoleColor.Red;
+                            System.Console.WriteLine("\nPlease select a valid option (1-4).");
+                            Console.ResetColor();
                             break;  // The menu will run again.
                     }
                 }
                 else
-                {
-                    System.Console.WriteLine("Invalid input, you have to enter YES or NO!");
-                    Console.ReadLine();
+                {   
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    System.Console.WriteLine("\nInvalid input, you have to enter YES or NO!");
+                    Console.ResetColor();
                 }
             }
         }
@@ -89,14 +92,16 @@ public class Remove // Class to delete specific data in the Library (Delete  => 
                 // If the user would like to exit.
                 if (_input?.ToUpper() == "Q")
                 {
-                    System.Console.WriteLine("Redirecting to Menu for Remove.");
+                    System.Console.WriteLine("Redirecting to Menu for Remove.\n");
                     break;
                 }
 
                 // Error handling if there is no Book with entered ID.
-                if (!int.TryParse(Console.ReadLine(), out var bookID))
+                if (!int.TryParse(_input, out var bookID))
                 {
-                    System.Console.WriteLine("The ID could not be found, please try again!");
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    System.Console.WriteLine("The ID could not be found, please try again!\n");
+                    Console.ResetColor();
                     continue;
                 }
 
@@ -104,8 +109,9 @@ public class Remove // Class to delete specific data in the Library (Delete  => 
                 var removeBook = context.Books.FirstOrDefault(b => b.BookID == bookID);
                 if (removeBook == null)
                 {
-                    System.Console.WriteLine("The ID could not be found, please try again!");
-                    Console.ReadLine();
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    System.Console.WriteLine("The ID could not be found, please try again!\n");
+                    Console.ResetColor();
                     return;
                 }
 
@@ -123,7 +129,9 @@ public class Remove // Class to delete specific data in the Library (Delete  => 
 
                 context.Books.Remove(removeBook);   // Deleting the Book.
                 context.SaveChanges();  // Saving changes to the database.
-                System.Console.WriteLine($"You've now erased this book: {removeBook.Title}.");
+                Console.ForegroundColor = ConsoleColor.DarkYellow;
+                System.Console.WriteLine($"You've now erased this book: {removeBook.Title}.\n");
+                Console.ResetColor();
                 break;
             }
         }
@@ -138,7 +146,7 @@ public class Remove // Class to delete specific data in the Library (Delete  => 
             while (true)
             {
                 var Authors = context.Authors.ToList(); // Creating a local variable to the list of Authors in the library.
-                System.Console.WriteLine("Enter an Author ID to remove (type 'LIST' to view all books or 'Q' to quit): ");
+                System.Console.WriteLine("\nEnter an Author ID to remove (type 'LIST' to view all books or 'Q' to quit): ");
                 var _input = Console.ReadLine()?.Trim();
 
                 if (_input?.ToUpper() == "LIST")
@@ -150,23 +158,22 @@ public class Remove // Class to delete specific data in the Library (Delete  => 
                     {
                         System.Console.WriteLine($"Author ID: {_author.AuthorID,-10} Name: {_author.FirstName} {_author.LastName}");
                     }
-                    Console.ReadLine();
                     continue;
                 }
 
                 // If the user would like to exit.
                 if (_input?.ToUpper() == "Q")
                 {
-                    System.Console.WriteLine("Redirecting to Menu for Remove.");
-                    Console.ReadLine();
+                    System.Console.WriteLine("Redirecting to Menu for Remove.\n");
                     break;
                 }
 
                 // Error handling if there is no Author with entered ID.
-                if (!int.TryParse(Console.ReadLine(), out var authorID))
+                if (!int.TryParse(_input, out var authorID))
                 {
-                    System.Console.WriteLine("The ID could not be found, please try again!");
-                    Console.ReadLine();
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    System.Console.WriteLine("The ID could not be found, please try again!\n");
+                    Console.ResetColor();
                     return;
                 }
 
@@ -174,8 +181,9 @@ public class Remove // Class to delete specific data in the Library (Delete  => 
                 var removeAuthor = context.Authors.FirstOrDefault(a => a.AuthorID == authorID);
                 if (removeAuthor == null)
                 {
-                    System.Console.WriteLine("The ID could not be found, please try again!");
-                    Console.ReadLine();
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    System.Console.WriteLine("The ID could not be found, please try again!\n");
+                    Console.ResetColor();
                     return;
                 }
 
@@ -194,8 +202,9 @@ public class Remove // Class to delete specific data in the Library (Delete  => 
 
                 context.Authors.Remove(removeAuthor);   // Deleting the Author.
                 context.SaveChanges();  // Saving changes to the database.
-                System.Console.WriteLine($"You've now erased this Author: {removeAuthor.FirstName} {removeAuthor.LastName}.");
-                Console.ReadLine();
+                Console.ForegroundColor = ConsoleColor.DarkYellow;
+                System.Console.WriteLine($"You've now erased this Author: {removeAuthor.FirstName} {removeAuthor.LastName}.\n");
+                Console.ResetColor();
                 break;
             }
         }
@@ -218,13 +227,16 @@ public class Remove // Class to delete specific data in the Library (Delete  => 
 
                 if (!Loan.Any())
                 {
-                    Console.WriteLine("There are no loans at the moment.");
-                    Console.ReadLine();
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine("There are no loans at the moment.\n");
+                    Console.ResetColor();
                     return;
                 }
 
                 // Listing the available loans
+                Console.ForegroundColor = ConsoleColor.DarkBlue;
                 Console.WriteLine("Available Loans:");
+                Console.ResetColor();
                 foreach (var item in Loan)
                 {
                     Console.WriteLine($"Loan ID: {item.LoanID,10}, Borrower: {item.Borrower.FirstName} {item.Borrower.LastName,30}, " +
@@ -246,8 +258,9 @@ public class Remove // Class to delete specific data in the Library (Delete  => 
                 // Error handling if there is no Author with entered ID.
                 if (!int.TryParse(_input, out var loanId))
                 {
-                    Console.WriteLine("The ID could not be found, please try again!");
-                    Console.ReadLine();
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine("The ID could not be found, please try again!\n");
+                    Console.ResetColor();
                     continue;
                 }
 
@@ -258,8 +271,9 @@ public class Remove // Class to delete specific data in the Library (Delete  => 
 
                 if (_loan == null)
                 {
-                    Console.WriteLine("The ID could not be found, please try again!");
-                    Console.ReadLine();
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine("The ID could not be found, please try again!\n");
+                    Console.ResetColor();
                     continue;
                 }
 
@@ -270,14 +284,14 @@ public class Remove // Class to delete specific data in the Library (Delete  => 
                 {
                     context.Lendings.Remove(_loan); // Removing the loan.
                     context.SaveChanges();          // SAving changes.   
-                    Console.WriteLine($"You have now removed the loan! ID: {_loan.LoanID}");
-                    Console.ReadLine();
+                    Console.ForegroundColor = ConsoleColor.DarkYellow;
+                    Console.WriteLine($"You have now removed the loan! ID: {_loan.LoanID}\n");
+                    Console.ResetColor();
                     break;
                 }
                 else
                 {
-                    Console.WriteLine("Loan deletion canceled.");
-                    Console.ReadLine();
+                    Console.WriteLine("Loan deletion canceled.\n");
                     break;
                 }
             }

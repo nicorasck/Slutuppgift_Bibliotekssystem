@@ -4,18 +4,17 @@ using Microsoft.EntityFrameworkCore.Storage.Json;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
 
-public class ListLibrary
+public class ListLibrary    // A method for listing Library => called in the classes for ViewLibrary and SetRelationships.
 {
     public static void Run()
     {   
         using (var context = new AppDbContext())
         {
-                    // Variable - Books and Authors which are set in a relationship.
+            // Variable - Books and Authors which are set in a relationship.
             var BookAuthor = context.Books
                 .Include(ba => ba.BookAuthors)  // From this one you get for an example the Author ID.
                 .ThenInclude(a => a.Author)
                 .ToList();
-            
             // Variable - Authors without any connected Books.
             var AuthorsWithoutBooks = context.Authors
                 .Where(a => !a.BookAuthors.Any())

@@ -48,28 +48,32 @@ public class LoanBook   // Class to Loan a book and to add data for a Borrower.
                 var _input = Console.ReadLine().ToUpper();
                 if (_input == "NO")
                 {
-                    System.Console.WriteLine("Mission aborted - Please press any key for Menu.");
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    System.Console.WriteLine("\nMission aborted - Please press any key for Menu.");
+                    Console.ResetColor();
                     Console.ReadLine();
                     return;
                 }
                 else if (_input != "YES")
                 {
+                    Console.ForegroundColor = ConsoleColor.Red;
                     System.Console.WriteLine("Invalid Input, you will be redirected to the Menu!");
+                    Console.ResetColor();
                     Console.ReadLine();
                     return;
                 }
 
                 // Letting the User enter First- and last name => to find out if the user already exists in the Data Base or not.
-                System.Console.WriteLine("Enter your First Name: ");
+                System.Console.Write("\nEnter your First Name: ");
                 var _firstName = Console.ReadLine()?.Trim();
-                System.Console.WriteLine("Enter your Last Name: ");
+                System.Console.Write("\nEnter your Last Name: ");
                 var _lastName = Console.ReadLine()?.Trim();
 
                 // Error handling (the names cannot be empty).
                 if (string.IsNullOrWhiteSpace(_firstName) || string.IsNullOrWhiteSpace(_lastName))
                 {
                     Console.ForegroundColor = ConsoleColor.Red;
-                    Console.WriteLine("First Name and Last Name cannot be empty.");
+                    Console.WriteLine("\nFirst Name and Last Name cannot be empty.");
                     Console.ResetColor();
                     continue;
                 }
@@ -81,12 +85,12 @@ public class LoanBook   // Class to Loan a book and to add data for a Borrower.
                 if (_borrower == null)
                 {
                     Console.ForegroundColor = ConsoleColor.Red;
-                    System.Console.WriteLine("You are not in the Data Base. A new registration will be proceeded.");
+                    System.Console.WriteLine("\nYou are not in the Data Base. A new registration will be proceeded.");
                     Console.ResetColor();
 
-                    System.Console.WriteLine("Enter your Email: ");
+                    System.Console.Write("Enter your Email: ");
                     var _email = Console.ReadLine()?.Trim();
-                    System.Console.WriteLine("Enter your Phone Number");
+                    System.Console.Write("\nEnter your Phone Number");
                     var _phoneNumber = Console.ReadLine()?.Trim();
 
                     //  Creating a new instance for a Borrower (required properties).
@@ -143,7 +147,7 @@ public class LoanBook   // Class to Loan a book and to add data for a Borrower.
                 if (!int.TryParse(Console.ReadLine(), out var bookID))
                 {
                     Console.ForegroundColor = ConsoleColor.Red;
-                    System.Console.WriteLine("The ID could not be found, please try again!");
+                    System.Console.WriteLine("\nThe ID could not be found, please try again!");
                     Console.ResetColor();
                     continue;
                 }
@@ -152,7 +156,7 @@ public class LoanBook   // Class to Loan a book and to add data for a Borrower.
                 if (loanBook == null)
                 {
                     Console.ForegroundColor = ConsoleColor.Red;
-                    Console.WriteLine("Book was not found. Please check the Book ID and try again.");
+                    Console.WriteLine("\nBook was not found. Please check the Book ID and try again.");
                     Console.ResetColor();
                     Console.ReadLine();
                     continue;   // User will be redirected to the List of Books
@@ -162,7 +166,7 @@ public class LoanBook   // Class to Loan a book and to add data for a Borrower.
                 if (!loanBook.IsAvailable) // Checking if the Book is available or not.
                 {
                     Console.ForegroundColor = ConsoleColor.Red;
-                    Console.WriteLine("The selected book is currently unavailable.");
+                    Console.WriteLine("\nThe selected book is currently unavailable.");
                     Console.ResetColor();
                     Console.ReadLine();
                     break;
@@ -214,9 +218,9 @@ public class ReturnBook
                     .ThenInclude(b => b.Author)
                     .ToList();
 
-                System.Console.WriteLine("\nPlease enter the First Name of the borrower: ");
+                System.Console.Write("\nPlease enter the First Name of the borrower: ");
                 var _boFirstName = Console.ReadLine().Trim();
-                System.Console.WriteLine("Please enter the Last Name of the borrower: ");
+                System.Console.Write("\nPlease enter the Last Name of the borrower: ");
                 var _boLastName = Console.ReadLine().Trim();
 
                 // Checking if the given name combination does exists in the entity for Borrower.
@@ -226,7 +230,7 @@ public class ReturnBook
                 if (_borrower == null)
                 {
                     Console.ForegroundColor = ConsoleColor.Red;
-                    System.Console.WriteLine("The name of the borrower cannot be found in the Data Base!");
+                    System.Console.WriteLine("\nThe name of the borrower cannot be found in the Data Base!");
                     Console.ResetColor();
                     Console.ReadLine();
                     continue;
@@ -257,13 +261,13 @@ public class ReturnBook
                 {
                     System.Console.WriteLine($"Book ID: {book.BookID, -3} - Title: {book.Book.Title, -30} Loan Date: {book.LoanDate.ToShortDateString()}");
                 }
-                System.Console.WriteLine("\nPlease enter the Book ID: ");
+                System.Console.Write("\nPlease enter the Book ID: ");
                 
                 // Error handling if the user enter an incorrect ID.
                 if (!int.TryParse(Console.ReadLine(), out var bookID))
                 {
                     Console.ForegroundColor = ConsoleColor.Red;
-                    System.Console.WriteLine("The ID could not be found, please try again!");
+                    System.Console.WriteLine("\nThe ID could not be found, please try again!");
                     Console.ResetColor();
                     Console.ReadLine();
                     continue;
@@ -279,7 +283,7 @@ public class ReturnBook
                 if (_loan == null)
                 {
                     Console.ForegroundColor = ConsoleColor.Red;
-                    System.Console.WriteLine($"Cannot find any ongoing loan for {_boFirstName} {_boLastName} with this book!");
+                    System.Console.WriteLine($"\nCannot find any ongoing loan for {_boFirstName} {_boLastName} with this book!");
                     Console.ResetColor();
                     Console.ReadLine();
                     continue;
