@@ -51,7 +51,7 @@ public class BooksWithAuthors
 
                     foreach (var author in Authors)
                     {
-                        Console.WriteLine($"Author Name: {author.FirstName} {author.LastName, -20} Birth year: {author.BirthYear}");
+                        Console.WriteLine($"Author Name: {author.FirstName} {author.LastName} (Birth year: {author.BirthYear})");
                     }
                 }
                 break;
